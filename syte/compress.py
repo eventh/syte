@@ -72,6 +72,9 @@ def compress_js():
     if settings.BITBUCKET_INTEGRATION_ENABLED:
         js_files.append('components/bitbucket.js')
 
+    if settings.OHLOH_INTEGRATION_ENABLED:
+        js_files.append('components/ohloh.js')
+
     combined = ''
     for js in js_files:
         f = open('static/js/' + js, 'r')

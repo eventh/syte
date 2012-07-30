@@ -61,6 +61,11 @@ if settings.BITBUCKET_INTEGRATION_ENABLED:
         url(r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),
     )
 
+#Ohloh Integration
+if settings.OHLOH_INTEGRATION_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh'),
+    )
 
 #Statics: Hacky for now... fix this later...
 urlpatterns += patterns('',
@@ -69,7 +74,4 @@ urlpatterns += patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
 )
-
-
-
 

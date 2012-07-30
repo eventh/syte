@@ -290,3 +290,12 @@ def lastfm(request, username):
     return HttpResponse(content=json.dumps(context), status=user.status_code,
                         content_type=user.headers['content-type'])
 
+
+def ohloh(request, username):
+    r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
+        settings.OHLOH_API_URL,
+        username,
+        settings.OHLOH_API_KEY))
+
+    return HttpResponse(content=json.dumps(r.json), status=r.status_code,
+                        content_type=r.headers['content-type'])
