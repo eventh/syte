@@ -30,6 +30,7 @@
     <ul class="main-nav">
       <li><a href="/" id="home-link">Home</a></li>
       <li><a href="http://github.com/eventh" id="github-link">Github</a></li>
+      <li><a href="http://bitbucket.org/eventh" id="bitbucket-link">Bitbucket</a></li>
       <li><a href="mailto:eventh@gmail.com?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
   </nav>
@@ -50,6 +51,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
     dribbble_integration_enabled = {% if DRIBBBLE_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     instagram_integration_enabled = {% if INSTAGRAM_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     lastfm_integration_enabled = {% if LASTFM_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
+    bitbucket_integration_enabled = {% if BITBUCKET_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     disqus_integration_enabled = {% if DISQUS_INTEGRATION_ENABLED %}true{% else %}false{% endif %};
 
 
@@ -75,6 +77,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
 {% if DRIBBBLE_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/dribbble.js"></script>{% endif %}
 {% if INSTAGRAM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/instagram.js"></script>{% endif %}
 {% if LASTFM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/lastfm.js"></script>{% endif %}
+{% if BITBUCKET_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/bitbucket.js"></script>{% endif %}
 {% if DISQUS_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/disqus.js"></script>{% endif %}
 
 {% else %}
