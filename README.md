@@ -90,6 +90,11 @@ Syte has Last.fm integration, which means that when someone clicks on a link tha
 ![Syte Lastfm](https://github.com/rigoneri/syte/blob/master/readme-imgs/f-6.png?raw=true)
 
 
+### Ohloh.net
+
+Syte has Ohloh.net integration, TODO(even)!!
+
+
 ## Responsive UI
 
 Syte is responsive, which means that it scales down to a mobile device screen size.
