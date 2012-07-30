@@ -13,8 +13,8 @@ function setupOhloh(url, el) {
       return false;
   })
 
-  if (params.length == 1) {
-     var username = params[0];
+  if (params.length == 2) {
+     var username = params[1];
 
      var spinner = new Spinner(spin_opts).spin();
      $('#ohloh-link').append(spinner.el);

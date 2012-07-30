@@ -1,8 +1,7 @@
-
 from context_processor import site_pages
 from django.shortcuts import redirect, render
 from django.template import Context, loader
-from django.http import HttpResponse, HttpResponseServerError, Http404
+from django.http import HttpResponse, HttpResponseServerError
 from django.conf import settings
 from pybars import Compiler
 from datetime import datetime
@@ -11,6 +10,12 @@ import os
 import requests
 import json
 import oauth2 as oauth
+
+try:
+    from xml.etree import cElementTree as ET
+except ImportError:
+    from xml.etree import ElementTree as ET
+
 
 def server_error(request, template_name='500.html'):
     t = loader.get_template(template_name)
@@ -143,7 +148,7 @@ def blog_post(request, post_id):
 def blog_tags(request, tag_slug):
     offset = request.GET.get('o', 0)
     if request.is_ajax():
-        r = requests.get('{0}/posts?api_key={1}&tag={2}&offset={3}'.format(settings.TUMBLR_API_URL, 
+        r = requests.get('{0}/posts?api_key={1}&tag={2}&offset={3}'.format(settings.TUMBLR_API_URL,
             settings.TUMBLR_API_KEY, tag_slug, offset))
         return HttpResponse(content=r.text, status=r.status_code,
                 content_type=r.headers['content-type'])
@@ -182,7 +187,6 @@ def instagram_auth(request):
         context['error'] = error
 
     return render(request, 'instagram_auth.html', context)
-
 
 
 def instagram(request):
@@ -247,9 +251,55 @@ def lastfm(request, username):
 
 def ohloh(request, username):
     r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
-        settings.OHLOH_API_URL,
-        username,
-        settings.OHLOH_API_KEY))
+        settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
 
-    return HttpResponse(content=json.dumps(r.json), status=r.status_code,
-                        content_type=r.headers['content-type'])
+    # Basic account information
+    root = ET.fromstring(r.text)
+    account = root.find('result/account')
+    context = {node.tag: node.text for node in account}
+    context['login'] = username
+    context['kudo_score'] = account.find('kudo_score/kudo_rank').text
+
+    # Project managed by 'username'
+    man_r = requests.get('{0}accounts/{1}/projects.xml?api_key={2}'.format(
+        settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
+    root = ET.fromstring(man_r.text)
+    projects = [{i.tag: i.text for i in node} for node in root.find('result')]
+    context['managed_projects'] = len(projects)
+
+    # Other projects 'username' has contributed to
+    for name in settings.OHLOH_PROJECT_URL_NAMES:
+        pro_r = requests.get('{0}p/{1}.xml?api_key={2}'.format(
+            settings.OHLOH_API_URL, name, settings.OHLOH_API_KEY))
+        root = ET.fromstring(pro_r.text)
+        projects.append({i.tag: i.text for i in root.find('result/project')})
+
+    context['projects'] = projects
+    context['total_projects'] = len(projects)
+    context['total_commits'] = 0
+
+    # Contributions to each project and total commits
+    user_id = context['id']
+    for project in projects:
+        project['commits'] = 0
+        project['man_months'] = 0
+
+        # Find contributions tied to our account id
+        pro_r = requests.get('{0}p/{1}/contributors.xml?api_key={2}'.format(
+            settings.OHLOH_API_URL, project['id'], settings.OHLOH_API_KEY))
+        root = ET.fromstring(pro_r.text)
+        for node in root.find('result'):
+            values = {n.tag: n.text for n in node}
+            if values.get('account_id', None) == user_id:
+
+                # Store commits, primary language and man months
+                if not project.get('language'):
+                    project['language'] = values['primary_language_nice_name']
+                    project['last_commit_time'] = values['last_commit_time']
+                project['man_months'] += int(values['man_months'])
+                project['commits'] += int(values['commits'])
+
+        context['total_commits'] += project['commits']
+
+    return HttpResponse(content=json.dumps(context), status=r.status_code,
+                        content_type='application/json; charset=utf-8')
