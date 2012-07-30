@@ -1,6 +1,7 @@
 
 DEPLOYMENT_MODE = 'prod'
-COMPRESS_REVISION_NUMBER = '0.2'
+COMPRESS_REVISION_NUMBER = '0.4'
+
 
 #Blog Integration: Tumblr
 TUMBLR_BLOG_URL = 'eventh.tumblr.com'
@@ -75,6 +76,7 @@ BITBUCKET_API_URL = 'https://api.bitbucket.org/1.0/'
 OHLOH_INTEGRATION_ENABLED = True
 OHLOH_API_URL = 'http://www.ohloh.net/'
 OHLOH_API_KEY = '[ENTER OHLOH API_KEY HERE, SEE OHLOH SETUP INSTRUCTIONS]'
+OHLOH_PROJECT_URL_NAMES = []
 
 
 if DEPLOYMENT_MODE == 'dev':
