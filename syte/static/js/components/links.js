@@ -97,6 +97,7 @@ function setupLinks() {
          $('#dribbble-profile').remove();
          $('#instagram-profile').remove();
          $('#lastfm-profile').remove();
+         $('#bitbucket-profile').remove();
          $('.modal-backdrop').remove();
          adjustSelection('ohloh-link');
 
