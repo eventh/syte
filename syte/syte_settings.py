@@ -3,6 +3,7 @@ DEPLOYMENT_MODE = 'prod'
 COMPRESS_REVISION_NUMBER = '0.4'
 
 
+
 #Blog Integration: Tumblr
 TUMBLR_BLOG_URL = 'eventh.tumblr.com'
 TUMBLR_API_URL = 'http://api.tumblr.com/v2/blog/{0}'.format(TUMBLR_BLOG_URL)
@@ -70,6 +71,9 @@ LASTFM_USERNAME = '[ENTER LASTFM username HERE, SEE LASTFM SETUP INSTRUCTIONS]'
 #Bitbucket Integration
 BITBUCKET_INTEGRATION_ENABLED = True
 BITBUCKET_API_URL = 'https://api.bitbucket.org/1.0/'
+# Forks count require one connection for each repository,
+# set BITBUCKET_SHOW_FORKS to false to disable
+BITBUCKET_SHOW_FORKS = False
 
 
 #Ohloh Integration
