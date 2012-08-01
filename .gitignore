@@ -1,2 +1,4 @@
 *.pyc
+.env
+.foreman
 .DS_Store
