@@ -5,7 +5,7 @@
 # Run Syte locally on 127.0.0.1:8000
 local:
 	@python manage.py collectstatic --noinput
-	@foreman start --port=8000
+	@foreman start --port=8000 --procfile=Procfile-dev --env=.env
 
 # Push to heroku
 heroku:

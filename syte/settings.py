@@ -1,20 +1,16 @@
 # Django settings for syte project.
-
 import os
-import django
-# calculated paths for django and the site
-# used as starting points for various other paths
-DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Even Wiik Thomassen', 'eventh@gmail.com'),
 )
 MANAGERS = ADMINS
-
 
 TIME_ZONE = 'Europe/Oslo'
 LANGUAGE_CODE = 'en-us'
@@ -67,9 +63,9 @@ INSTALLED_APPS = (
 
 
 # Staticfiles app
-STATIC_ROOT = os.path.join(SITE_ROOT, '../staticfiles')
+STATIC_ROOT = os.path.join(SITE_ROOT, '../staticfiles/')
 STATICFILES_DIRS = (
-    os.path.join(SITE_ROOT, 'static'),
+    os.path.join(SITE_ROOT, 'static/'),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
