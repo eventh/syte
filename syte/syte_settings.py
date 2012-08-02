@@ -1,5 +1,11 @@
+import os
 
-DEPLOYMENT_MODE = 'dev'
+
+if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
+    DEPLOYMENT_MODE = 'dev'
+else:
+    DEPLOYMENT_MODE = 'prod'
+
 COMPRESS_REVISION_NUMBER = '0.6'
 
 
@@ -85,6 +91,9 @@ OHLOH_PROJECT_URL_NAMES = []
 if DEPLOYMENT_MODE == 'dev':
     SITE_ROOT_URI = 'http://127.0.0.1:8000/'
     DEBUG = True
+    CACHES = {
+        'default': {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}
+    }
 else:
     DEBUG = False
     SITE_ROOT_URI = 'http://eventh.herokuapp.com/'

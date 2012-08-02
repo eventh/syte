@@ -3,3 +3,4 @@
 .foreman
 .DS_Store
 sitestatic/
+staticfiles/
