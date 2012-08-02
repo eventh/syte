@@ -11,10 +11,10 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ RSS_FEED_URL }}" />
   {% endif %}
   {% if DEV_DEPLOYMENT_MODE %}
-  <link rel="stylesheet/less" type="text/css" href="{{ MEDIA_URL }}less/styles.less">
-  <script src="{{ MEDIA_URL }}less/less-1.1.5.min.js" type="text/javascript"></script>
+  <link rel="stylesheet/less" type="text/css" href="{{ STATIC_URL }}less/styles.less">
+  <script src="{{ STATIC_URL }}less/less-1.1.5.min.js" type="text/javascript"></script>
   {% else %}
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/styles-{{ COMPRESS_REVISION_NUMBER }}.min.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/styles-{{ COMPRESS_REVISION_NUMBER }}.min.css" type="text/css" media="screen, projection">
   {% endif %}
 </head>
 <body>
@@ -29,9 +29,9 @@
   <nav>
     <ul class="main-nav">
       <li><a href="/" id="home-link">Home</a></li>
-      <li><a href="http://www.ohloh.net/accounts/Eventh" id="ohloh-link">Ohloh.net</a></li>
       <li><a href="http://github.com/eventh" id="github-link">Github</a></li>
       <li><a href="http://bitbucket.org/eventh" id="bitbucket-link">Bitbucket</a></li>
+      <li><a href="http://www.ohloh.net/accounts/Eventh" id="ohloh-link">Ohloh.net</a></li>
       <li><a href="mailto:eventh@gmail.com?subject=Hello" id="contact-link">Contact</a></li>
     </ul>
   </nav>
@@ -61,30 +61,30 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
 </script>
 
 {% if DEV_DEPLOYMENT_MODE %}
-<script src="{{ MEDIA_URL }}js/libs/jquery.url.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/require.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/handlebars.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/moment.min.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/bootstrap-modal.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/spin.min.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/prettify.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery.url.js"></script>
+<script src="{{ STATIC_URL }}js/libs/require.js"></script>
+<script src="{{ STATIC_URL }}js/libs/handlebars.js"></script>
+<script src="{{ STATIC_URL }}js/libs/moment.min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/bootstrap-modal.js"></script>
+<script src="{{ STATIC_URL }}js/libs/spin.min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/prettify.js"></script>
 
-<script src="{{ MEDIA_URL }}js/components/base.js"></script>
-<script src="{{ MEDIA_URL }}js/components/mobile.js"></script>
-<script src="{{ MEDIA_URL }}js/components/blog-posts.js"></script>
-<script src="{{ MEDIA_URL }}js/components/links.js"></script>
+<script src="{{ STATIC_URL }}js/components/base.js"></script>
+<script src="{{ STATIC_URL }}js/components/mobile.js"></script>
+<script src="{{ STATIC_URL }}js/components/blog-posts.js"></script>
+<script src="{{ STATIC_URL }}js/components/links.js"></script>
 
-{% if TWITTER_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/twitter.js"></script>{% endif %}
-{% if GITHUB_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/github.js"></script>{% endif %}
-{% if DRIBBBLE_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/dribbble.js"></script>{% endif %}
-{% if INSTAGRAM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/instagram.js"></script>{% endif %}
-{% if LASTFM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/lastfm.js"></script>{% endif %}
-{% if BITBUCKET_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/bitbucket.js"></script>{% endif %}
-{% if OHLOH_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/ohloh.js"></script>{% endif %}
-{% if DISQUS_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/disqus.js"></script>{% endif %}
+{% if TWITTER_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/twitter.js"></script>{% endif %}
+{% if GITHUB_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/github.js"></script>{% endif %}
+{% if DRIBBBLE_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/dribbble.js"></script>{% endif %}
+{% if INSTAGRAM_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/instagram.js"></script>{% endif %}
+{% if LASTFM_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/lastfm.js"></script>{% endif %}
+{% if BITBUCKET_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/bitbucket.js"></script>{% endif %}
+{% if OHLOH_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/ohloh.js"></script>{% endif %}
+{% if DISQUS_INTEGRATION_ENABLED %}<script src="{{ STATIC_URL }}js/components/disqus.js"></script>{% endif %}
 
 {% else %}
-<script src="{{ MEDIA_URL }}js/min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js"></script>
+<script src="{{ STATIC_URL }}js/min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js"></script>
 {% endif %}
 
 {% block extra_js %}{% endblock %}

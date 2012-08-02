@@ -2,3 +2,4 @@
 .env
 .foreman
 .DS_Store
+sitestatic/

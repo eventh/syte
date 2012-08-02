@@ -69,8 +69,6 @@ if settings.OHLOH_INTEGRATION_ENABLED:
 
 #Statics: Hacky for now... fix this later...
 urlpatterns += patterns('',
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url':
-        '/static/imgs/favicon.ico'}),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.MEDIA_ROOT}),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/imgs/favicon.ico'}),
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 )

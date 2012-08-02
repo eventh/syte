@@ -1,6 +1,6 @@
 
 DEPLOYMENT_MODE = 'dev'
-COMPRESS_REVISION_NUMBER = '0.5'
+COMPRESS_REVISION_NUMBER = '0.6'
 
 
 #Blog Integration: Tumblr
@@ -89,4 +89,4 @@ else:
     DEBUG = False
     SITE_ROOT_URI = 'http://eventh.herokuapp.com/'
 
-MEDIA_URL = SITE_ROOT_URI + 'static/'
+STATIC_URL = SITE_ROOT_URI + 'static/'

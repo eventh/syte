@@ -23,7 +23,7 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'static')
+USE_ETAGS = True  # Take care of sending Not Modified responses
 
 SECRET_KEY = '5c^pml#7e3d$zor%*_7y098(l0i=d3$+y_((11-_j0&amp;f9rw9%)'
 
@@ -33,6 +33,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -60,7 +61,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'gunicorn',
+)
+
+
+# Staticfiles app
+STATIC_ROOT = os.path.join(SITE_ROOT, '../staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(SITE_ROOT, 'static'),
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
 from syte_settings import *
