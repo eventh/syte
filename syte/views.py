@@ -31,7 +31,7 @@ def page_not_found_error(request, template_name='404.html'):
     return HttpResponseServerError(t.render(Context(d)))
 
 
-@cache_page(3660)
+@cache_page(3600)
 def home(request):
     return render(request, 'index.html', {})
 
@@ -55,7 +55,7 @@ def twitter(request, username):
              content_type=resp['content-type'])
 
 
-@cache_page(900)
+@cache_page(1800)
 def github(request, username):
     user_r = requests.get('{0}users/{1}?access_token={2}'.format(
         settings.GITHUB_API_URL,
@@ -111,7 +111,7 @@ def github_auth(request):
     return render(request, 'github_auth.html', context)
 
 
-@cache_page(900)
+@cache_page(3600)  # 1 hour
 def bitbucket(request, username):
     r = requests.get('{0}users/{1}/'.format(
         settings.BITBUCKET_API_URL, username))
@@ -299,7 +299,7 @@ def lastfm(request, username):
                         content_type=user.headers['content-type'])
 
 
-@cache_page(36600)  # 10 hours
+@cache_page(43200)  # 12 hours
 def ohloh(request, username):
     r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
