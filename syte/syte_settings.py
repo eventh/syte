@@ -85,6 +85,7 @@ BITBUCKET_SHOW_FORKS = False
 OHLOH_INTEGRATION_ENABLED = True
 OHLOH_API_URL = 'http://www.ohloh.net/'
 OHLOH_API_KEY = '[ENTER OHLOH API_KEY HERE, SEE OHLOH SETUP INSTRUCTIONS]'
+# Ohloh only returns managed projects, manually list other relevant project
 OHLOH_PROJECT_URL_NAMES = []
 
 

@@ -334,6 +334,11 @@ def ohloh(request, username):
     for project in projects:
         project['commits'] = 0
         project['man_months'] = 0
+        project['last_commit_time'] = ''
+
+        if not project.get('homepage_url', False):
+            project['homepage_url'] = 'http://www.ohloh.net/p/' + \
+                    project['url_name']
 
         # Find contributions tied to our account id
         pro_r = requests.get('{0}p/{1}/contributors.xml?api_key={2}'.format(
@@ -351,6 +356,9 @@ def ohloh(request, username):
                 project['commits'] += int(values['commits'])
 
         context['total_commits'] += project['commits']
+
+    # Sort projects by 'last_commit_time'
+    context['projects'].sort(key=itemgetter('last_commit_time'), reverse=True)
 
     return HttpResponse(content=json.dumps(context), status=r.status_code,
                         content_type='application/json; charset=utf-8')

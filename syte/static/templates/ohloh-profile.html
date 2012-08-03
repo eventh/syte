@@ -27,17 +27,20 @@
   <ul class="profile-repos">
     {{#each projects}}
     <li>
-    <a href="http://www.ohloh.net/p/{{ url_name }}" class="profile-repo-name">{{ name }}</a>
-    <a href="{{ homepage_url }}">Homepage</a>
-    <!--<a href="{{ homepage_url }}"><img src="{{ logo_url }}" alt="{{ name }}" width="32" height="32"/></a>-->
+    <a href="{{ homepage_url }}" class="profile-repo-name">{{ name }}</a>
+    {{#if small_logo_url }}
+    <a href="http://www.ohloh.net/p/{{ url_name }}" class="profile-repo-logo"><img src="{{ small_logo_url }}" alt="{{ name }}" /></a>
+    {{/if}}
     <p class="profile-repo-text">
       {{ description }}
     </p>
+    {{#if commits }}
     <ul class="profile-repo-stats">
-      <li>Primary language: {{ language }}</li>
-	  <li>Commits: {{ commits }}</li>
-	  <li>Man months: {{ man_months }}</li>
+      <li>{{ language }}</li>
+	  <li class="profile-repo-commits">Commits: {{ commits }}</li>
+      <li class="profile-repo-months">Man months: {{ man_months }}</li>
     </ul>
+    {{/if}}
     </li>
     {{/each}}
   </ul>
