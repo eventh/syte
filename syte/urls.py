@@ -1,9 +1,10 @@
-from django.http import HttpResponse
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from django.conf import settings
+
 
 handler404 = 'syte.views.page_not_found_error'
 handler500 = 'syte.views.server_error'
+
 
 urlpatterns = patterns('',
     url(r'^post/(?P<post_id>\w+)/?$', 'syte.views.blog_post'),
@@ -13,11 +14,13 @@ urlpatterns = patterns('',
     url(r'^/?$', 'syte.views.home'),
 )
 
+
 #Twitter Integration
 if settings.TWITTER_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
         url(r'^twitter/(?P<username>\w+)/?$', 'syte.views.twitter'),
     )
+
 
 #Github Integration
 if settings.GITHUB_OAUTH_ENABLED:
@@ -37,7 +40,8 @@ if settings.DRIBBBLE_INTEGRATION_ENABLED:
         url(r'^dribbble/(?P<username>\w+)/?$', 'syte.views.dribbble'),
     )
 
-#Instagram Oauth
+
+#Instagram Integration
 if settings.INSTAGRAM_OAUTH_ENABLED:
     urlpatterns += patterns('',
         url(r'^instagram/auth/?$', 'syte.views.instagram_auth'),
@@ -49,11 +53,13 @@ if settings.INSTAGRAM_INTEGRATION_ENABLED:
         url(r'^instagram/?$', 'syte.views.instagram'),
     )
 
+
 #LastFM Integration
 if settings.LASTFM_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
         url(r'^lastfm/(?P<username>\S+)/?$', 'syte.views.lastfm'),
     )
+
 
 #Bitbucket Integration
 if settings.BITBUCKET_INTEGRATION_ENABLED:
@@ -61,14 +67,18 @@ if settings.BITBUCKET_INTEGRATION_ENABLED:
         url(r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),
     )
 
+
 #Ohloh Integration
 if settings.OHLOH_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
         url(r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh'),
     )
 
-#Statics: Hacky for now... fix this later...
+
+#Static files
 urlpatterns += patterns('',
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/imgs/favicon.ico'}),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to',
+            {'url': settings.STATIC_URL + 'imgs/favicon.ico'}),
+    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT})
 )

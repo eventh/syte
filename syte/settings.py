@@ -46,7 +46,7 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
-    "django.core.context_processors.media",
+    "django.core.context_processors.static",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     "syte.context_processor.site_pages",
@@ -61,9 +61,8 @@ INSTALLED_APPS = (
     'gunicorn',
 )
 
-
 # Staticfiles app
-STATIC_ROOT = os.path.join(SITE_ROOT, '../staticfiles/')
+STATIC_ROOT = os.path.join(SITE_ROOT, '../static/')
 STATICFILES_DIRS = (
     os.path.join(SITE_ROOT, 'static/'),
 )
