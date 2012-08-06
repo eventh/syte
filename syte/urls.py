@@ -33,6 +33,11 @@ if settings.GITHUB_INTEGRATION_ENABLED:
         url(r'^github/(?P<username>\w+)/?$', 'syte.views.github'),
     )
 
+#Bitbucket Integration
+if settings.BITBUCKET_INTEGRATION_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),
+    )
 
 #Dribbble Integration
 if settings.DRIBBBLE_INTEGRATION_ENABLED:
@@ -61,10 +66,10 @@ if settings.LASTFM_INTEGRATION_ENABLED:
     )
 
 
-#Bitbucket Integration
-if settings.BITBUCKET_INTEGRATION_ENABLED:
+#Soundcloud Integration
+if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),
+        url(r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud'),
     )
 
 

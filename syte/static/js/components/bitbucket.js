@@ -28,7 +28,6 @@ function setupBitbucket(url, el) {
 
             var template = Handlebars.compile(bitbucket_view);
             bitbucket_data.user.followers = numberWithCommas(bitbucket_data.user.followers)
-            //bitbucket_data.user.following = numberWithCommas(bitbucket_data.user.following)
 
             $(template(bitbucket_data)).modal().on('hidden', function () {
                 $(this).remove();
