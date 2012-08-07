@@ -1,4 +1,3 @@
-
 function fetchBlogPosts(offset, tag) {
   var blog_fetch_url = '/blog.json?o=' + offset;
 

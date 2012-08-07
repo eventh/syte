@@ -6,84 +6,76 @@ handler404 = 'syte.views.page_not_found_error'
 handler500 = 'syte.views.server_error'
 
 
-urlpatterns = patterns('',
-    url(r'^post/(?P<post_id>\w+)/?$', 'syte.views.blog_post'),
-    url(r'^tags/(?P<tag_slug>\w+)/?$', 'syte.views.blog_tags'),
-    url(r'^blog.json/?$', 'syte.views.blog'),
-    url(r'^about/?$', 'syte.views.home'),
-    url(r'^/?$', 'syte.views.home'),
+urlpatterns = patterns('syte.views',
+    (r'^post/(?P<post_id>\w+)/?$', 'blog_post'),
+    (r'^tags/(?P<tag_slug>\w+)/?$', 'blog_tags'),
+    (r'^blog.json/?$', 'blog'),
+    (r'^about/?$', 'home'),
+    (r'^/?$', 'home'),
 )
 
 
 #Twitter Integration
 if settings.TWITTER_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^twitter/(?P<username>\w+)/?$', 'syte.views.twitter'),
-    )
+        (r'^twitter/(?P<username>\w+)/?$', 'syte.views.twitter'),)
 
 
 #Github Integration
 if settings.GITHUB_OAUTH_ENABLED:
     urlpatterns += patterns('',
-        url(r'^github/auth/?$', 'syte.views.github_auth'),
-    )
+        (r'^github/auth/?$', 'syte.views.github_auth'),)
 
 if settings.GITHUB_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^github/(?P<username>\w+)/?$', 'syte.views.github'),
-    )
+        (r'^github/(?P<username>\w+)/?$', 'syte.views.github'),)
+
 
 #Bitbucket Integration
 if settings.BITBUCKET_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),
-    )
+        (r'^bitbucket/(?P<username>\w+)/?$', 'syte.views.bitbucket'),)
+
 
 #Dribbble Integration
 if settings.DRIBBBLE_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^dribbble/(?P<username>\w+)/?$', 'syte.views.dribbble'),
-    )
+        (r'^dribbble/(?P<username>\w+)/?$', 'syte.views.dribbble'),)
 
 
 #Instagram Integration
 if settings.INSTAGRAM_OAUTH_ENABLED:
     urlpatterns += patterns('',
-        url(r'^instagram/auth/?$', 'syte.views.instagram_auth'),
-    )
+        (r'^instagram/auth/?$', 'syte.views.instagram_auth'),)
 
 if settings.INSTAGRAM_INTEGRATION_ENABLED:
-    urlpatterns += patterns('',
-        url(r'^instagram/(?P<max_id>\w+)/?$', 'syte.views.instagram_next'),
-        url(r'^instagram/?$', 'syte.views.instagram'),
-    )
+    urlpatterns += patterns('syte.views',
+        (r'^instagram/(?P<max_id>\w+)/?$', 'instagram_next'),
+        (r'^instagram/?$', 'instagram'),)
 
 
 #LastFM Integration
 if settings.LASTFM_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^lastfm/(?P<username>\S+)/?$', 'syte.views.lastfm'),
-    )
+        (r'^lastfm/(?P<username>\S+)/?$', 'syte.views.lastfm'),)
 
 
 #Soundcloud Integration
 if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud'),
-    )
+        (r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud'),)
 
 
 #Ohloh Integration
 if settings.OHLOH_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh'),
-    )
+        (r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh'),)
 
 
 #Static files
-urlpatterns += patterns('',
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to',
-            {'url': settings.STATIC_URL + 'imgs/favicon.ico'}),
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.STATIC_ROOT})
-)
+urlpatterns += patterns('django.views.generic.simple',
+    url(r'^favicon\.ico$', 'redirect_to',
+        {'url': settings.STATIC_URL + 'imgs/favicon.ico'}),)
+if settings.DEBUG:
+    urlpatterns += patterns('django.contrib.staticfiles.views',
+        (r'^static/(?P<path>.*)$', 'serve'),)

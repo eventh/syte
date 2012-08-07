@@ -1,7 +1,6 @@
 var $url;
 
 function setupLinks() {
-
   $('a').click(function(e) {
       if (e.which == 2)
           return;
@@ -143,4 +142,3 @@ function adjustSelection(el) {
   if (el == 'home-link')
     $url = null;
 }
-

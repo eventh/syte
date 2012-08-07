@@ -31,12 +31,12 @@ def page_not_found_error(request, template_name='404.html'):
     return HttpResponseServerError(t.render(Context(d)))
 
 
-@cache_page(3600)
+@cache_page(3600, key_prefix='home')
 def home(request):
     return render(request, 'index.html', {})
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='twitter')
 def twitter(request, username):
     consumer = oauth.Consumer(key=settings.TWITTER_CONSUMER_KEY,
             secret=settings.TWITTER_CONSUMER_SECRET)
@@ -55,7 +55,7 @@ def twitter(request, username):
              content_type=resp['content-type'])
 
 
-@cache_page(1800)
+@cache_page(1800, key_prefix='github')
 def github(request, username):
     user_r = requests.get('{0}users/{1}?access_token={2}'.format(
         settings.GITHUB_API_URL,
@@ -111,7 +111,7 @@ def github_auth(request):
     return render(request, 'github_auth.html', context)
 
 
-@cache_page(3600)  # 1 hour
+@cache_page(3600, key_prefix='bitbucket')  # 1 hour
 def bitbucket(request, username):
     r = requests.get('{0}users/{1}/'.format(
         settings.BITBUCKET_API_URL, username))
@@ -144,14 +144,14 @@ def bitbucket(request, username):
                         content_type=r.headers['content-type'])
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='dribble')
 def dribbble(request, username):
     r = requests.get('{0}{1}/shots'.format(settings.DRIBBBLE_API_URL, username))
     return HttpResponse(content=r.text, status=r.status_code,
                         content_type=r.headers['content-type'])
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='blog')
 def blog(request):
     offset = request.GET.get('o', 0)
     r = requests.get('{0}/posts?api_key={1}&offset={2}'.format(settings.TUMBLR_API_URL,
@@ -160,7 +160,7 @@ def blog(request):
                         content_type=r.headers['content-type'])
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='blog_post')
 def blog_post(request, post_id):
     context = dict()
 
@@ -192,7 +192,7 @@ def blog_post(request, post_id):
     return render(request, 'blog-post.html', context)
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='blog_tags')
 def blog_tags(request, tag_slug):
     offset = request.GET.get('o', 0)
     if request.is_ajax():
@@ -237,7 +237,7 @@ def instagram_auth(request):
     return render(request, 'instagram_auth.html', context)
 
 
-@cache_page(120)
+@cache_page(120, key_prefix='instagram')
 def instagram(request):
     user_r = requests.get('{0}users/{1}/?access_token={2}'.format(
         settings.INSTAGRAM_API_URL,
@@ -278,7 +278,7 @@ def instagram_next(request, max_id):
                         content_type=media_r.headers['content-type'])
 
 
-@cache_page(60)
+@cache_page(60, key_prefix='lastfm')
 def lastfm(request, username):
     url = '{0}?method=user.getrecenttracks&user={1}&api_key={2}&format=json'.format(
                                                     settings.LASTFM_API_URL,
@@ -299,7 +299,7 @@ def lastfm(request, username):
                         content_type=user.headers['content-type'])
 
 
-@cache_page(43200)  # 12 hours
+@cache_page(43200, key_prefix='ohloh')  # 12 hours
 def ohloh(request, username):
     r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
@@ -364,6 +364,7 @@ def ohloh(request, username):
                         content_type='application/json; charset=utf-8')
 
 
+@cache_page(120, key_prefix='soundcloud')
 def soundcloud(request, username):
     context = dict()
     user_profile = requests.get('{0}users/{1}.json?client_id={2}'.format(

@@ -1,6 +1,5 @@
 
 var isMobileView = false;
-
 if (typeof window.matchMedia !== 'undefined') {
     var mediaQuery = window.matchMedia("(max-width:799px)");
     if (mediaQuery.matches) {
