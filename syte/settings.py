@@ -58,30 +58,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'gunicorn',
 )
-
-# Staticfiles app
-STATIC_ROOT = os.path.join(SITE_ROOT, '../static/')
-STATICFILES_DIRS = (
-    os.path.join(SITE_ROOT, 'static/'),
-)
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-)
-
-# Heroku memcachier
-os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '')
-os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
-os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
-        'TIMEOUT': 500,
-        'BINARY': True,
-    }
-}
 
 from syte_settings import *

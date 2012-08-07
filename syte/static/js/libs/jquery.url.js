@@ -5,8 +5,15 @@
  * Licensed under an MIT-style license. See https://github.com/allmarkedup/jQuery-URL-Parser/blob/master/LICENSE for details.
  */ 
 
-;(function($, undefined) {
-    
+;(function(factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD available; use anonymous module
+        define(['jquery'], factory);
+    } else {
+        // No AMD available; mutate global vars
+        factory(jQuery);
+    }
+})(function($, undefined) {
     var tag2attr = {
         a       : 'href',
         img     : 'src',
@@ -32,7 +39,7 @@
 	
 	function parseUri( url, strictMode )
 	{
-		var str = decodeURI( url ),
+		var str = decodeURI( unescape(url) ),
 		    res   = parser[ strictMode || false ? "strict" : "loose" ].exec( str ),
 		    uri = { attr : {}, param : {}, seg : {} },
 		    i   = 14;
@@ -69,7 +76,7 @@
         
         // compile a 'base' domain attribute
         
-        uri.attr['base'] = uri.attr.host ? uri.attr.protocol+"://"+uri.attr.host + (uri.attr.port ? ":"+uri.attr.port : '') : '';
+        uri.attr['base'] = uri.attr.host ? (uri.attr.protocol ?  uri.attr.protocol+"://"+uri.attr.host : uri.attr.host) + (uri.attr.port ? ":"+uri.attr.port : '') : '';
         
 		return uri;
 	};
@@ -159,4 +166,5 @@
         
 	};
 	
-})(jQuery);
+});
+

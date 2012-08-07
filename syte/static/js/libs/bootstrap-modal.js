@@ -1,5 +1,5 @@
 /* =========================================================
- * bootstrap-modal.js v2.0.3
+ * bootstrap-modal.js v2.0.4
  * http://twitter.github.com/bootstrap/javascript.html#modals
  * =========================================================
  * Copyright 2012 Twitter, Inc.
@@ -66,10 +66,6 @@
           if (transition) {
             that.$element[0].offsetWidth // force reflow
           }
-
-          //this mobile part is custom, im too lasy to extend this feature for this
-          if (isMobileView)
-             that.$element.css('top', (window.pageYOffset + 45) + 'px');
 
           that.$element.addClass('in')
 

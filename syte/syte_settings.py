@@ -1,4 +1,7 @@
 import os
+import time
+
+from django.utils.http import http_date
 
 
 if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
@@ -6,7 +9,7 @@ if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
 else:
     DEPLOYMENT_MODE = 'prod'
 
-COMPRESS_REVISION_NUMBER = '0.6'
+COMPRESS_REVISION_NUMBER = '0.7'
 
 
 #Blog Integration: Tumblr
@@ -97,14 +100,60 @@ OHLOH_API_KEY = '[ENTER OHLOH API_KEY HERE, SEE OHLOH SETUP INSTRUCTIONS]'
 OHLOH_PROJECT_URL_NAMES = []
 
 
-if DEPLOYMENT_MODE == 'dev':
-    SITE_ROOT_URI = 'http://127.0.0.1:8000/'
-    DEBUG = True
+# S3 storage for static files
+AWS_ACCESS_KEY_ID = '[ENTER AWS ACCESS KEY ID HERE]'
+AWS_SECRET_ACCESS_KEY = '[ENTER AWS SECRET ACCESS KEY HERE]'
+AWS_STORAGE_BUCKET_NAME = '[ENTER AWS BUCKET NAME HERE]'
+AWS_HEADERS = {
+    'Expires': http_date(time.time() + 31556926),  # 1 year
+    'Cache-Control': 'max-age=31556926',
+}
+
+
+# Heroku memcachier
+os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '')
+os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
+os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
+
+if os.environ.get('DISABLE_CACHE', False):
+    pass
+elif DEPLOYMENT_MODE == 'dev':
     CACHES = {
         'default': {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}
     }
 else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
+            'TIMEOUT': 500,
+            'BINARY': True,
+        }
+    }
+
+
+# Staticfiles app
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = os.path.join(SITE_ROOT, '../static/')
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+)
+if DEPLOYMENT_MODE == 'dev':
+    STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static/'),)
+else:
+    STATICFILES_DIRS = (
+        ('imgs', os.path.join(SITE_ROOT, 'static/imgs/')),
+        ('min', os.path.join(SITE_ROOT, 'static/min/')),
+    )
+
+
+if DEPLOYMENT_MODE == 'dev':
+    SITE_ROOT_URI = 'http://127.0.0.1:8000/'
+    STATIC_URL = SITE_ROOT_URI + 'static/'
+    DEBUG = True
+else:
     DEBUG = False
     SITE_ROOT_URI = 'http://eventh.herokuapp.com/'
-
-STATIC_URL = SITE_ROOT_URI + 'static/'
+    STATIC_URL = '//s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'

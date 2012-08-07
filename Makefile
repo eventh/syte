@@ -13,11 +13,11 @@ s3 static:
 	@heroku run python manage.py collectstatic --noinput --app eventh
 
 # Run Syte locally on django dev server at 127.0.0.1:8000
-local: compress collect
+local: collect
 	python manage.py runserver
 
 # Run Syte locally with foreman
-foreman: compress collect
+foreman: collect
 	foreman start --port=8000 --env=.env
 
 # Compress css and js files
