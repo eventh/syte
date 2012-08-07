@@ -6,11 +6,5 @@
 </section>
 {% endblock %}
 {% block extra_inline_js %}
-$(function() {
-  setupLinks();
-  adjustBlogHeaders();
-  {% if DISQUS_INTEGRATION_ENABLED %}
-  embedDisqus();
-  {% endif %}
-});
+var blogsPage = true;
 {% endblock %}

@@ -9,7 +9,7 @@ if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
 else:
     DEPLOYMENT_MODE = 'prod'
 
-COMPRESS_REVISION_NUMBER = '0.7'
+COMPRESS_REVISION_NUMBER = '0.8'
 
 
 #Blog Integration: Tumblr
@@ -143,7 +143,8 @@ if DEPLOYMENT_MODE == 'dev':
 else:
     STATICFILES_DIRS = (
         ('imgs', os.path.join(SITE_ROOT, 'static/imgs/')),
-        ('min', os.path.join(SITE_ROOT, 'static/min/')),
+        ('min', os.path.join(SITE_ROOT, 'static/css/')),
+        ('min', os.path.join(SITE_ROOT, 'static/js/min/')),
     )
 
 
