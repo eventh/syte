@@ -17,13 +17,15 @@ TUMBLR_BLOG_URL = 'eventh.tumblr.com'
 TUMBLR_API_URL = 'http://api.tumblr.com/v2/blog/{0}'.format(TUMBLR_BLOG_URL)
 TUMBLR_API_KEY = '[ENTER TUMBLR API KEY HERE, SEE TUMBLR SETUP INSTRUCTIONS]'
 
+
 #RSS Feed Integration: (by default use Tumbrl rss feed)
 RSS_FEED_ENABLED = True
 RSS_FEED_URL = 'http://{0}/rss'.format(TUMBLR_BLOG_URL)
 
+
 #Twitter Integration
 TWITTER_INTEGRATION_ENABLED = False
-TWITTER_API_URL = 'http://api.twitter.com/1/statuses/user_timeline.json?include_rts=false&exclude_replies=true&count=50&screen_name='
+TWITTER_API_URL = 'https://api.twitter.com/'
 TWITTER_CONSUMER_KEY = '[ENTER TWITTER CONSUMER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]'
 TWITTER_CONSUMER_SECRET = '[ENTER TWITTER CONSUMER SECRET HERE, SEE TWITTER SETUP INSTRUCTIONS]'
 TWITTER_USER_KEY = '[ENTER TWITTER USER KEY HERE, SEE TWITTER SETUP INSTRUCTIONS]'
