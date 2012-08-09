@@ -19,8 +19,6 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = True
 
-USE_ETAGS = True  # Take care of sending Not Modified responses
-
 SECRET_KEY = '5c^pml#7e3d$zor%*_7y098(l0i=d3$+y_((11-_j0&amp;f9rw9%)'
 
 TEMPLATE_LOADERS = (

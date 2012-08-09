@@ -106,9 +106,10 @@ OHLOH_PROJECT_URL_NAMES = []
 AWS_ACCESS_KEY_ID = '[ENTER AWS ACCESS KEY ID HERE]'
 AWS_SECRET_ACCESS_KEY = '[ENTER AWS SECRET ACCESS KEY HERE]'
 AWS_STORAGE_BUCKET_NAME = '[ENTER AWS BUCKET NAME HERE]'
+AWS_IS_GZIPPED = True  # Automatically gzip CSS and JavaScript files
 AWS_HEADERS = {
     'Expires': http_date(time.time() + 31556926),  # 1 year
-    'Cache-Control': 'max-age=31556926',
+    'Cache-Control': 'public, max-age=31556926',
 }
 
 

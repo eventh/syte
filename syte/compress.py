@@ -11,10 +11,11 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'syte.settings'
 
 
 from django.conf import settings
+REVISION = settings.COMPRESS_REVISION_NUMBER
 
 
-def compress_statics():
-    """Compress both CSS and JavaScript files."""
+def create_output_folders():
+    """Create output folders if they don't already exists."""
     try:
         for path in (os.path.join(PATH, 'static/css'), OUT_PATH):
             if not os.path.exists(path):
@@ -23,9 +24,6 @@ def compress_statics():
         print 'Make sure to create "syte > static > css" and ' \
                 '"syte > static > js > min" before compressing statics.'
 
-    compress_styles()
-    compress_js()
-
 
 def compress_styles():
     less_path = os.path.join(PATH, 'static/less/styles.less')
@@ -33,10 +31,10 @@ def compress_styles():
 
     subprocess.check_call(
         shlex.split('lessc {0} {1}styles-{2}.min.css -yui-compress'.format(
-            less_path, css_path, settings.COMPRESS_REVISION_NUMBER)))
+            less_path, css_path, REVISION)))
 
     print 'CSS Styles Generated: {0}styles-{1}.min.css'.format(
-        css_path, settings.COMPRESS_REVISION_NUMBER)
+        css_path, REVISION)
 
 
 def compress_js():
@@ -66,13 +64,13 @@ def compress_js():
         'r.js -o baseUrl={0}/static/ name=js/components/base include={1}'
         ' mainConfigFile={0}/static/js/components/base.js paths.jquery=empty:'
         ' out={2}scripts-{3}.min.js'.format(
-            PATH, includes, OUT_PATH, settings.COMPRESS_REVISION_NUMBER)))
+            PATH, includes, OUT_PATH, REVISION)))
 
     print 'JavaScript Combined and Minified: {0}scripts-{1}.min.js'.format(
-        OUT_PATH, settings.COMPRESS_REVISION_NUMBER)
+        OUT_PATH, REVISION)
 
     # Minify require.js
-    # TODO: include require.js above, and use jquery from google CDN!!
+    # TODO: include require.js above
     subprocess.check_call(shlex.split(
         'uglifyjs -o {0}require.min.js {1}/static/js/libs/require.js'.format(
             OUT_PATH, PATH)))
@@ -81,5 +79,6 @@ def compress_js():
 
 
 if __name__ == "__main__":
-    compress_statics()
-    sys.exit()
+    create_output_folders()
+    compress_styles()
+    compress_js()
