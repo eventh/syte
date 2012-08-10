@@ -1,42 +1,46 @@
-from context_processor import site_pages
-from django.shortcuts import redirect, render
-from django.template import Context, loader
-from django.http import HttpResponse, HttpResponseServerError
-from django.conf import settings
-from django.views.decorators.cache import cache_page
-from pybars import Compiler
+# -*- coding: utf-8 -*-
+import os
+import json
 from datetime import datetime
 from operator import itemgetter
-from rauth.service import OAuth1Service
+from xml.etree import ElementTree
 
-import os
 import requests
-import json
+from django.conf import settings
+from django.template import Context, loader
+from django.http import HttpResponse, HttpResponseServerError
+from django.shortcuts import redirect, render
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page, never_cache
+from rauth.service import OAuth1Service
+from pybars import Compiler
 
-try:
-    from xml.etree import cElementTree as ET
-except ImportError:
-    from xml.etree import ElementTree as ET
+from context_processor import site_pages
 
 
+# Settings for special caching of certain view content
+CACHE_TIME = 7200  # 2 hours
+JSON_TYPE = 'application/json; charset=utf-8'
+
+
+@never_cache
 def server_error(request, template_name='500.html'):
     t = loader.get_template(template_name)
     d = site_pages(request)
     return HttpResponseServerError(t.render(Context(d)))
 
 
+@never_cache
 def page_not_found_error(request, template_name='404.html'):
     t = loader.get_template(template_name)
     d = site_pages(request)
     return HttpResponseServerError(t.render(Context(d)))
 
 
-@cache_page(3600, key_prefix='home')
 def home(request):
     return render(request, 'index.html', {})
 
 
-@cache_page(120, key_prefix='twitter')
 def twitter(request, username):
     twitter = OAuth1Service(
         name='twitter',
@@ -59,8 +63,11 @@ def twitter(request, username):
                         content_type=r.response.headers['content-type'])
 
 
-@cache_page(1800, key_prefix='github')
-def github(request, username):
+def github(request, username, refresh=False):
+    content = cache.get('github')
+    if content is not None and not refresh:
+        return HttpResponse(content, JSON_TYPE)
+
     user_r = requests.get('{0}users/{1}?access_token={2}'.format(
         settings.GITHUB_API_URL,
         username,
@@ -73,27 +80,31 @@ def github(request, username):
 
     context = {'user': user_r.json}
     context.update({'repos': repos_r.json})
-
     context['repos'].sort(key=itemgetter('updated_at'), reverse=True)
 
-    return HttpResponse(content=json.dumps(context),
-                        status=repos_r.status_code,
-                        content_type=repos_r.headers['content-type'])
+    content = json.dumps(context)
+    if not (user_r.error or repos_r.error):
+        cache.set('github', content, CACHE_TIME)
+
+    return HttpResponse(content, repos_r.headers['content-type'],
+                        repos_r.status_code)
 
 
+@never_cache
 def github_auth(request):
     context = dict()
     code = request.GET.get('code', None)
     error = request.GET.get('error_description', None)
 
     if not code and not error:
-        return redirect('{0}?client_id={1}&redirect_uri={2}github/auth/&response_type=code'.format(
-            settings.GITHUB_OAUTH_AUTHORIZE_URL,
-            settings.GITHUB_CLIENT_ID,
-            settings.SITE_ROOT_URI))
+        return redirect('{0}?client_id={1}&redirect_uri={2}'
+                        'github/auth/&response_type=code'.format(
+                            settings.GITHUB_OAUTH_AUTHORIZE_URL,
+                            settings.GITHUB_CLIENT_ID,
+                            settings.SITE_ROOT_URI))
 
     if code:
-        r = requests.post(settings.GITHUB_OAUTH_ACCESS_TOKEN_URL, data = {
+        r = requests.post(settings.GITHUB_OAUTH_ACCESS_TOKEN_URL, data={
               'client_id': settings.GITHUB_CLIENT_ID,
               'client_secret': settings.GITHUB_CLIENT_SECRET,
               'redirect_uri': '{0}github/auth/'.format(settings.SITE_ROOT_URI),
@@ -115,8 +126,11 @@ def github_auth(request):
     return render(request, 'github_auth.html', context)
 
 
-@cache_page(3600, key_prefix='bitbucket')  # 1 hour
-def bitbucket(request, username):
+def bitbucket(request, username, refresh=False):
+    content = cache.get('bitbucket')
+    if content is not None and not refresh:
+        return HttpResponse(content, JSON_TYPE)
+
     r = requests.get('{0}users/{1}/'.format(
         settings.BITBUCKET_API_URL, username))
 
@@ -144,32 +158,33 @@ def bitbucket(request, username):
     # Sort the repositories on utc_last_updated
     data['repositories'].sort(key=itemgetter('utc_last_updated'), reverse=True)
 
-    return HttpResponse(content=json.dumps(data), status=r.status_code,
-                        content_type=r.headers['content-type'])
+    content = json.dumps(data)
+    if not (r.error or r_followers.error):
+        cache.set('bitbucket', content, CACHE_TIME)
+
+    return HttpResponse(content, r.headers['content-type'], r.status_code)
 
 
-@cache_page(120, key_prefix='dribble')
 def dribbble(request, username):
-    r = requests.get('{0}{1}/shots'.format(settings.DRIBBBLE_API_URL, username))
+    r = requests.get('{0}{1}/shots'.format(
+        settings.DRIBBBLE_API_URL, username))
     return HttpResponse(content=r.text, status=r.status_code,
                         content_type=r.headers['content-type'])
 
 
-@cache_page(120, key_prefix='blog')
 def blog(request):
     offset = request.GET.get('o', 0)
-    r = requests.get('{0}/posts?api_key={1}&offset={2}'.format(settings.TUMBLR_API_URL,
-        settings.TUMBLR_API_KEY, offset))
+    r = requests.get('{0}/posts?api_key={1}&offset={2}'.format(
+        settings.TUMBLR_API_URL, settings.TUMBLR_API_KEY, offset))
     return HttpResponse(content=r.text, status=r.status_code,
                         content_type=r.headers['content-type'])
 
 
-@cache_page(120, key_prefix='blog_post')
 def blog_post(request, post_id):
     context = dict()
 
-    r = requests.get('{0}/posts?api_key={1}&id={2}'.format(settings.TUMBLR_API_URL,
-            settings.TUMBLR_API_KEY, post_id))
+    r = requests.get('{0}/posts?api_key={1}&id={2}'.format(
+        settings.TUMBLR_API_URL, settings.TUMBLR_API_KEY, post_id))
 
     if r.status_code == 200:
         post_response = r.json.get('response', {})
@@ -184,7 +199,8 @@ def blog_post(request, post_id):
                 post['disqus_enabled'] = True
 
             path_to_here = os.path.abspath(os.path.dirname(__file__))
-            f = open('{0}/static/templates/blog-post-{1}.html'.format(path_to_here, post['type']), 'r')
+            f = open('{0}/static/templates/blog-post-{1}.html'.format(
+                path_to_here, post['type']), 'r')
             f_data = f.read()
             f.close()
 
@@ -196,36 +212,39 @@ def blog_post(request, post_id):
     return render(request, 'blog-post.html', context)
 
 
-@cache_page(120, key_prefix='blog_tags')
 def blog_tags(request, tag_slug):
     offset = request.GET.get('o', 0)
     if request.is_ajax():
-        r = requests.get('{0}/posts?api_key={1}&tag={2}&offset={3}'.format(settings.TUMBLR_API_URL,
-            settings.TUMBLR_API_KEY, tag_slug, offset))
+        r = requests.get('{0}/posts?api_key={1}&tag={2}&offset={3}'.format(
+            settings.TUMBLR_API_URL, settings.TUMBLR_API_KEY,
+            tag_slug, offset))
         return HttpResponse(content=r.text, status=r.status_code,
                 content_type=r.headers['content-type'])
     return render(request, 'index.html', {'tag_slug': tag_slug})
 
 
+@never_cache
 def instagram_auth(request):
     context = dict()
     code = request.GET.get('code', None)
     error = request.GET.get('error_description', None)
 
     if not code and not error:
-        return redirect('{0}?client_id={1}&redirect_uri={2}instagram/auth/&response_type=code'.format(
-            settings.INSTAGRAM_OAUTH_AUTHORIZE_URL,
-            settings.INSTAGRAM_CLIENT_ID,
-            settings.SITE_ROOT_URI))
+        return redirect('{0}?client_id={1}&redirect_uri={2}'
+                        'instagram/auth/&response_type=code'.format(
+                            settings.INSTAGRAM_OAUTH_AUTHORIZE_URL,
+                            settings.INSTAGRAM_CLIENT_ID,
+                            settings.SITE_ROOT_URI))
 
     if code:
-        r = requests.post(settings.INSTAGRAM_OAUTH_ACCESS_TOKEN_URL, data = {
+        r = requests.post(settings.INSTAGRAM_OAUTH_ACCESS_TOKEN_URL, data={
               'client_id': settings.INSTAGRAM_CLIENT_ID,
               'client_secret': settings.INSTAGRAM_CLIENT_SECRET,
               'grant_type': 'authorization_code',
-              'redirect_uri': '{0}instagram/auth/'.format(settings.SITE_ROOT_URI),
+              'redirect_uri': '{0}instagram/auth/'.format(
+                  settings.SITE_ROOT_URI),
               'code': code,
-            })
+        })
 
         data = json.loads(r.text)
         error = data.get('error_message', None)
@@ -241,7 +260,6 @@ def instagram_auth(request):
     return render(request, 'instagram_auth.html', context)
 
 
-@cache_page(120, key_prefix='instagram')
 def instagram(request):
     user_r = requests.get('{0}users/{1}/?access_token={2}'.format(
         settings.INSTAGRAM_API_URL,
@@ -249,28 +267,29 @@ def instagram(request):
         settings.INSTAGRAM_ACCESS_TOKEN))
     user_data = json.loads(user_r.text)
 
-    media_r = requests.get('{0}users/{1}/media/recent/?access_token={2}'.format(
-        settings.INSTAGRAM_API_URL,
-        settings.INSTAGRAM_USER_ID,
-        settings.INSTAGRAM_ACCESS_TOKEN))
+    media_r = requests.get(
+        '{0}users/{1}/media/recent/?access_token={2}'.format(
+            settings.INSTAGRAM_API_URL,
+            settings.INSTAGRAM_USER_ID,
+            settings.INSTAGRAM_ACCESS_TOKEN))
     media_data = json.loads(media_r.text)
 
     context = {
         'user': user_data.get('data', None),
         'media': media_data.get('data', None),
         'pagination': media_data.get('pagination', None),
-        }
+    }
 
-    return HttpResponse(content=json.dumps(context), status=media_r.status_code,
+    return HttpResponse(content=json.dumps(context),
+                        status=media_r.status_code,
                         content_type=media_r.headers['content-type'])
 
 
 def instagram_next(request, max_id):
-    media_r = requests.get('{0}users/{1}/media/recent/?access_token={2}&max_id={3}'.format(
-        settings.INSTAGRAM_API_URL,
-        settings.INSTAGRAM_USER_ID,
-        settings.INSTAGRAM_ACCESS_TOKEN,
-        max_id))
+    media_r = requests.get(
+        '{0}users/{1}/media/recent/?access_token={2}&max_id={3}'.format(
+            settings.INSTAGRAM_API_URL, settings.INSTAGRAM_USER_ID,
+            settings.INSTAGRAM_ACCESS_TOKEN, max_id))
     media_data = json.loads(media_r.text)
 
     context = {
@@ -278,16 +297,17 @@ def instagram_next(request, max_id):
         'pagination': media_data.get('pagination', None),
     }
 
-    return HttpResponse(content=json.dumps(context), status=media_r.status_code,
+    return HttpResponse(content=json.dumps(context),
+                        status=media_r.status_code,
                         content_type=media_r.headers['content-type'])
 
 
-@cache_page(60, key_prefix='lastfm')
 def lastfm(request, username):
-    url = '{0}?method=user.getrecenttracks&user={1}&api_key={2}&format=json'.format(
-                                                    settings.LASTFM_API_URL,
-                                                    settings.LASTFM_USERNAME,
-                                                    settings.LASTFM_API_KEY)
+    url = '{0}?method=user.getrecenttracks&user={1}&api_key={2}&format=json' \
+            .format(settings.LASTFM_API_URL,
+                    settings.LASTFM_USERNAME,
+                    settings.LASTFM_API_KEY)
+
     tracks = requests.get(url)
     url = '{0}?method=user.getinfo&user={1}&api_key={2}&format=json'.format(
                                                     settings.LASTFM_API_URL,
@@ -303,13 +323,16 @@ def lastfm(request, username):
                         content_type=user.headers['content-type'])
 
 
-@cache_page(43200, key_prefix='ohloh')  # 12 hours
-def ohloh(request, username):
+def ohloh(request, username, refresh=False):
+    content = cache.get('ohloh')
+    if content is not None and not refresh:
+        return HttpResponse(content, JSON_TYPE)
+
     r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
 
     # Basic account information
-    root = ET.fromstring(r.text)
+    root = ElementTree.fromstring(r.text)
     account = root.find('result/account')
     context = {node.tag: node.text for node in account}
     context['login'] = username
@@ -318,7 +341,7 @@ def ohloh(request, username):
     # Project managed by 'username'
     man_r = requests.get('{0}accounts/{1}/projects.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
-    root = ET.fromstring(man_r.text)
+    root = ElementTree.fromstring(man_r.text)
     projects = [{i.tag: i.text for i in node} for node in root.find('result')]
     context['managed_projects'] = len(projects)
 
@@ -326,7 +349,7 @@ def ohloh(request, username):
     for name in settings.OHLOH_PROJECT_URL_NAMES:
         pro_r = requests.get('{0}p/{1}.xml?api_key={2}'.format(
             settings.OHLOH_API_URL, name, settings.OHLOH_API_KEY))
-        root = ET.fromstring(pro_r.text)
+        root = ElementTree.fromstring(pro_r.text)
         projects.append({i.tag: i.text for i in root.find('result/project')})
 
     context['projects'] = projects
@@ -347,7 +370,7 @@ def ohloh(request, username):
         # Find contributions tied to our account id
         pro_r = requests.get('{0}p/{1}/contributors.xml?api_key={2}'.format(
             settings.OHLOH_API_URL, project['id'], settings.OHLOH_API_KEY))
-        root = ET.fromstring(pro_r.text)
+        root = ElementTree.fromstring(pro_r.text)
         for node in root.find('result'):
             values = {n.tag: n.text for n in node}
             if values.get('account_id', None) == user_id:
@@ -364,11 +387,13 @@ def ohloh(request, username):
     # Sort projects by 'last_commit_time'
     context['projects'].sort(key=itemgetter('last_commit_time'), reverse=True)
 
-    return HttpResponse(content=json.dumps(context), status=r.status_code,
-                        content_type='application/json; charset=utf-8')
+    content = json.dumps(context)
+    if not (r.error or man_r.error):
+        cache.set('ohloh', content, CACHE_TIME)
+
+    return HttpResponse(content, JSON_TYPE, r.status_code)
 
 
-@cache_page(120, key_prefix='soundcloud')
 def soundcloud(request, username):
     context = dict()
     user_profile = requests.get('{0}users/{1}.json?client_id={2}'.format(
@@ -381,12 +406,14 @@ def soundcloud(request, username):
         settings.SOUNDCLOUD_CLIENT_ID))
 
     context = {
-        'user_profile' : user_profile.json,
-        'user_tracks' : {
-            'tracks' : user_tracks.json,
-            'show_artwork' : settings.SOUNDCLOUD_SHOW_ARTWORK,
-            'player_color' : settings.SOUNDCLOUD_PLAYER_COLOR
+        'user_profile': user_profile.json,
+        'user_tracks': {
+            'tracks': user_tracks.json,
+            'show_artwork': settings.SOUNDCLOUD_SHOW_ARTWORK,
+            'player_color': settings.SOUNDCLOUD_PLAYER_COLOR
         }
     }
-    return HttpResponse(content=json.dumps(context), status=user_profile.status_code,
+
+    return HttpResponse(content=json.dumps(context),
+                        status=user_profile.status_code,
                         content_type=user_profile.headers['content-type'])

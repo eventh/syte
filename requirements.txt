@@ -13,3 +13,4 @@ django-pylibmc-sasl>=0.2.4
 boto>=2.5.2
 rauth>=0.4.14
 -e hg+http://bitbucket.org/jezdez/django-storages#egg=django-storages
+newrelic

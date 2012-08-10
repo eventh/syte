@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import time
 
@@ -9,7 +10,7 @@ if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
 else:
     DEPLOYMENT_MODE = 'prod'
 
-COMPRESS_REVISION_NUMBER = '0.8'
+COMPRESS_REVISION_NUMBER = '0.9'
 
 
 #Blog Integration: Tumblr
@@ -129,7 +130,6 @@ else:
         'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
             'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
-            'TIMEOUT': 500,
             'BINARY': True,
         }
     }
