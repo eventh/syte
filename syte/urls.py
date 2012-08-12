@@ -12,7 +12,7 @@ urlpatterns = patterns('syte.views',
     (r'^tags/(?P<tag_slug>[\s\w\d-]+)/?$', 'blog_tags'),
     (r'^blog.json/?$', 'blog'),
     (r'^about/?$', 'home'),
-    (r'^/?$', 'home'),
+    (r'^/?$', 'home'),)
 
 
 #Twitter Integration
