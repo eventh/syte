@@ -11,7 +11,7 @@ from django.template import Context, loader
 from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import redirect, render
 from django.core.cache import cache
-from django.views.decorators.cache import cache_page, never_cache
+from django.views.decorators.cache import never_cache
 from rauth.service import OAuth1Service
 from pybars import Compiler
 
@@ -217,7 +217,7 @@ def blog_tags(request, tag_slug):
     if request.is_ajax():
         r = requests.get('{0}/posts?api_key={1}&tag={2}&offset={3}'.format(
             settings.TUMBLR_API_URL, settings.TUMBLR_API_KEY,
-            tag_slug, offset))
+            tag_slug.encode('UTF-8'), offset))
         return HttpResponse(content=r.text, status=r.status_code,
                 content_type=r.headers['content-type'])
     return render(request, 'index.html', {'tag_slug': tag_slug})

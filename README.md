@@ -215,6 +215,11 @@ Once you have those two items from Github you have to enter them in your **syte_
 
 After you have entered those two items, folow the steps below for running your Syte locally on your machine. Once you have your Syte running navigate to `http://127.0.0.1:8000/github/auth`, you will be taken to Github's website and will be asked to sign in and authorize your application. After you authorized your application you will be taken back to your Syte and you will be given your ***Access Token***
 
+You can also get your access token via the github api using curl:
+```
+curl -i -u "username:password" https://api.github.com/authorizations
+```
+
 Once you have your access token from Github you have to enter them in your **syte_settings.py** located in `syte > syste_settings.py`. Once you open that file enter it under `GITHUB_ACCESS_TOKEN`
 
 After you validated that your github integration worked go back to Github page and change the ***Callback URL*** field to have your domain info (this is not required), then make sure you turn off the github oauth interation setting so you don't make that available to everyone in the internet. You can do that by setting `GITHUB_OAUTH_ENABLED` to False.
@@ -363,6 +368,25 @@ First signup to [Heroku](http://heroku.com) then follow these simple [Django dep
 1. Change the ``DEPLOYMENT_MODE`` value to prod in **syte_settings.py** located in ``syte > syte_settings.py``
 2. Change the ``SITE_ROOT_URI`` value to your heroku app url in **syte_settings.py** see the available example to how it should be formatted.
 
+
+
+
+
+## Contributing
+
+There are plans for several services to be added in the
+[TODO file](https://github.com/rigoneri/syte/blob/master/TODO.md).  One of
+these services is a good place to start when looking for ways to help.  Also
+posting/fixing [issues](https://github.com/rigoneri/syte/issues) is always
+helpful.
+
+If you would like to add support for a new service you might find the [HELP
+file](https://github.com/rigoneri/syte/blob/master/HELP.md) useful on how to
+get started and where your new code might go, etc.
+
+Also, the [DESIGN file](https://github.com/rigoneri/syte/blob/master/DESIGN.md)
+can be a useful resource when starting out with the project and trying to
+understand roughly how it all fits together.
 
 
 

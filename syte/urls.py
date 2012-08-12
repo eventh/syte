@@ -9,11 +9,10 @@ handler500 = 'syte.views.server_error'
 
 urlpatterns = patterns('syte.views',
     (r'^post/(?P<post_id>\w+)/?$', 'blog_post'),
-    (r'^tags/(?P<tag_slug>\w+)/?$', 'blog_tags'),
+    (r'^tags/(?P<tag_slug>[\s\w\d-]+)/?$', 'blog_tags'),
     (r'^blog.json/?$', 'blog'),
     (r'^about/?$', 'home'),
     (r'^/?$', 'home'),
-)
 
 
 #Twitter Integration
