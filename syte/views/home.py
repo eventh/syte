@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from syte.context_processor import site_pages
 from django.shortcuts import render
 from django.template import Context, loader
 from django.http import HttpResponseServerError
 from django.views.decorators.cache import never_cache
+
+from syte.context_processor import site_pages
 
 
 @never_cache

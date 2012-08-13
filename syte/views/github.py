@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
+import json
+from operator import itemgetter
+
+import requests
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.cache import cache
 from django.views.decorators.cache import never_cache
-from operator import itemgetter
-
-import requests
-import json
 
 
 def github(request, username, refresh=False):
@@ -50,12 +50,12 @@ def github_auth(request):
             settings.SITE_ROOT_URI))
 
     if code:
-        r = requests.post(settings.GITHUB_OAUTH_ACCESS_TOKEN_URL, data = {
-              'client_id': settings.GITHUB_CLIENT_ID,
-              'client_secret': settings.GITHUB_CLIENT_SECRET,
-              'redirect_uri': '{0}github/auth/'.format(settings.SITE_ROOT_URI),
-              'code': code,
-            }, headers={'Accept': 'application/json'})
+        r = requests.post(settings.GITHUB_OAUTH_ACCESS_TOKEN_URL, data={
+            'client_id': settings.GITHUB_CLIENT_ID,
+            'client_secret': settings.GITHUB_CLIENT_SECRET,
+            'redirect_uri': '{0}github/auth/'.format(settings.SITE_ROOT_URI),
+            'code': code,
+        }, headers={'Accept': 'application/json'})
 
         try:
             data = r.json

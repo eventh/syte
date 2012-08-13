@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+import json
+
+import requests
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
-
-import requests
-import json
 
 
 @never_cache
@@ -21,13 +21,13 @@ def instagram_auth(request):
             settings.SITE_ROOT_URI))
 
     if code:
-        r = requests.post(settings.INSTAGRAM_OAUTH_ACCESS_TOKEN_URL, data = {
-              'client_id': settings.INSTAGRAM_CLIENT_ID,
-              'client_secret': settings.INSTAGRAM_CLIENT_SECRET,
-              'grant_type': 'authorization_code',
-              'redirect_uri': '{0}instagram/auth/'.format(settings.SITE_ROOT_URI),
-              'code': code,
-            })
+        r = requests.post(settings.INSTAGRAM_OAUTH_ACCESS_TOKEN_URL, data={
+            'client_id': settings.INSTAGRAM_CLIENT_ID,
+            'client_secret': settings.INSTAGRAM_CLIENT_SECRET,
+            'grant_type': 'authorization_code',
+            'redirect_uri': '{0}instagram/auth/'.format(settings.SITE_ROOT_URI),
+            'code': code,
+        })
 
         data = json.loads(r.text)
         error = data.get('error_message', None)
@@ -60,7 +60,7 @@ def instagram(request):
         'user': user_data.get('data', None),
         'media': media_data.get('data', None),
         'pagination': media_data.get('pagination', None),
-        }
+    }
 
     return HttpResponse(content=json.dumps(context), status=media_r.status_code,
                         content_type=media_r.headers['content-type'])
