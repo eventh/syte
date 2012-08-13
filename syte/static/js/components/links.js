@@ -1,5 +1,17 @@
 var $url;
 
+var allComponents = [
+  'instagram',
+  'twitter',
+  'github',
+  'dribbble',
+  'lastfm',
+  'soundcloud',
+  'bitbucket',
+  'ohloh',
+  'foursquare'
+];
+
 function setupLinks() {
   $('a').click(function(e) {
       if (e.which == 2)
@@ -14,120 +26,43 @@ function setupLinks() {
       $url = this.href;
 
       if (this.id == 'home-link' && window.location.pathname == '/') {
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#twitter-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('home-link');
+         adjustSelection('home');
       }
       else if(this.id == 'instagram-link' && instagram_integration_enabled) {
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#twitter-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('instagram-link');
-
+         adjustSelection('instagram');
          setupInstagram(this);
       }
       else if (twitter_integration_enabled && (url.attr('host') == 'twitter.com' || url.attr('host') == 'www.twitter.com')) {
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('twitter-link');
-
+         adjustSelection('twitter');
          setupTwitter(url, this);
       }
       else if (github_integration_enabled && (url.attr('host') == 'github.com' || url.attr('host') == 'www.github.com')) {
-         $('#twitter-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('github-link');
-
-         setupGithub(url, this);
+        adjustSelection('github');
+        setupGithub(url, this);
       }
       else if (dribbble_integration_enabled && (url.attr('host') == 'dribbble.com' || url.attr('host') == 'www.dribbble.com')) {
-         $('#twitter-profile').remove();
-         $('#github-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('dribbble-link');
-
+         adjustSelection('dribbble');
          setupDribbble(url, this);
       }
       else if (lastfm_integration_enabled && (url.attr('host') == 'lastfm.com' || url.attr('host') == 'www.lastfm.com')) {
-         $('#twitter-profile').remove();
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('lastfm-link');
-
-         setupLastfm(url, this);
-      }
-      else if (ohloh_integration_enabled && (url.attr('host') == 'ohloh.net' || url.attr('host') == 'www.ohloh.net')) {
-         $('#twitter-profile').remove();
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('.modal-backdrop').remove();
-         $('#soundcloud-profile').remove();
-         adjustSelection('ohloh-link');
-
-         setupOhloh(url, this);
+        adjustSelection('lastfm');
+        setupLastfm(url, this);
       }
       else if (soundcloud_integration_enabled && (url.attr('host') == 'soundcloud.com' || url.attr('host') == 'www.soundcloud.com')) {
-         $('#twitter-profile').remove();
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#bitbucket-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#lastfm-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('soundcloud-link');
-
-         setupSoundcloud(url, this);
+        adjustSelection('soundcloud');
+        setupSoundcloud(url, this);
       }
       else if (bitbucket_integration_enabled && (url.attr('host') == 'bitbucket.org' || url.attr('host') == 'www.bitbucket.org')) {
-         $('#twitter-profile').remove();
-         $('#github-profile').remove();
-         $('#dribbble-profile').remove();
-         $('#instagram-profile').remove();
-         $('#lastfm-profile').remove();
-         $('#ohloh-profile').remove();
-         $('#soundcloud-profile').remove();
-         $('.modal-backdrop').remove();
-         adjustSelection('bitbucket-link');
-
-         setupBitbucket(url, this);
+        adjustSelection('bitbucket');
+        setupBitbucket(url, this);
+      }
+      else if (ohloh_integration_enabled && (url.attr('host') == 'ohloh.net' || url.attr('host') == 'www.ohloh.net')) {
+        adjustSelection('ohloh');
+        setupOhloh(url, this);
+      }
+      else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
+         adjustSelection('foursquare');
+         setupFoursquare(this);
       }
       else {
          window.location = this.href;
@@ -135,10 +70,18 @@ function setupLinks() {
   });
 }
 
-function adjustSelection(el) {
-  $('.main-nav').children('li').removeClass('sel');
-  $('#' + el).parent().addClass('sel');
+function adjustSelection(component) {
+  $('.modal-backdrop').remove();
 
-  if (el == 'home-link')
+  for (c in allComponents) {
+    if (allComponents[c] != component) {
+      $('#' + allComponents[c] + '-profile').remove();
+    }
+  }
+
+  $('.main-nav').children('li').removeClass('sel');
+  $('#' + component + '-link').parent().addClass('sel');
+
+  if (component == 'home')
     $url = null;
 }

@@ -3,3 +3,4 @@
 .foreman
 .DS_Store
 /static/
+personal_syte_settings.py

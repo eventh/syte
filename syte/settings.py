@@ -64,4 +64,7 @@ INSTALLED_APPS = (
 
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-from syte_settings import *
+try:
+    from personal_syte_settings import *
+except ImportError:
+    from syte_settings import *

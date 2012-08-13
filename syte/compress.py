@@ -57,6 +57,7 @@ def compress_js():
         ('js/components/lastfm', settings.LASTFM_INTEGRATION_ENABLED),
         ('js/components/bitbucket', settings.BITBUCKET_INTEGRATION_ENABLED),
         ('js/components/soundcloud', settings.SOUNDCLOUD_INTEGRATION_ENABLED),
+        ('js/components/foursquare', settings.FOURSQUARE_INTEGRATION_ENABLED),
         ('js/components/ohloh', settings.OHLOH_INTEGRATION_ENABLED),
     )
 

@@ -39,6 +39,7 @@
       <li><a href="http://dribbble.com/rigoneri" id="dribbble-link">Dribbble</a></li>
       <li><a href="http://instagr.am/p/Lau1VrEPbt" id="instagram-link">Instagram</a></li>
       <li><a href="http://lastfm.com/user/rigoneri" id="lastfm-link">Last.fm</a></li>
+      <li><a href="https://foursquare.com/user/8786308" id="foursquare-link">Foursquare</a></li>
       <li><a href="http://soundcloud.com/guram-kajaia" id="soundcloud-link">Soundcloud</a></li>
       <li><a href="http://bitbucket.org/rigoneri" id="bitbucket-link">Bitbucket</a></li>
       <li><a href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
@@ -65,6 +66,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
     soundcloud_integration_enabled = {% if SOUNDCLOUD_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     bitbucket_integration_enabled = {% if BITBUCKET_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     ohloh_integration_enabled = {% if OHLOH_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
+    foursquare_integration_enabled = {% if FOURSQUARE_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     disqus_integration_enabled = {% if DISQUS_INTEGRATION_ENABLED %}true{% else %}false{% endif %};
 
 {% if DISQUS_INTEGRATION_ENABLED %}var disqus_shortname = '{{ DISQUS_SHORTNAME }}';{% endif %}
@@ -107,7 +109,8 @@ var require = {
 {% if LASTFM_INTEGRATION_ENABLED %}"js/components/lastfm",{% endif %}
 {% if BITBUCKET_INTEGRATION_ENABLED %}"js/components/bitbucket",{% endif %}
 {% if DISQUS_INTEGRATION_ENABLED %}"js/components/disqus",{% endif %}
-{% if SOUNDCLOUD_INTEGRATION_ENABLED %}"js/components/soundcloud.js",{% endif %}
+{% if SOUNDCLOUD_INTEGRATION_ENABLED %}"js/components/soundcloud",{% endif %}
+{% if FOURSQUARE_INTEGRATION_ENABLED %}"js/components/foursquare",{% endif %}
 {% if OHLOH_INTEGRATION_ENABLED %}"js/components/ohloh",{% endif %}
     ]);
 </script>
