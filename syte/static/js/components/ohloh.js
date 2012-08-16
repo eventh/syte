@@ -27,6 +27,9 @@ function setupOhloh(url, el) {
             }
 
             var template = Handlebars.compile(ohloh_view);
+            ohloh_data.monthly_commits = numberWithCommas(ohloh_data.monthly_commits)
+            ohloh_data.total_commits = numberWithCommas(ohloh_data.total_commits)
+
             $(template(ohloh_data)).modal().on('hidden', function () {
                 $(this).remove();
                 adjustSelection('home-link');

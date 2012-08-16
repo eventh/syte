@@ -10,7 +10,7 @@ if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
 else:
     DEPLOYMENT_MODE = 'prod'
 
-COMPRESS_REVISION_NUMBER = '0.9'
+COMPRESS_REVISION_NUMBER = '1.0'
 
 
 #Blog Integration: Tumblr
@@ -112,8 +112,7 @@ BITBUCKET_SHOW_FORKS = False
 OHLOH_INTEGRATION_ENABLED = True
 OHLOH_API_URL = 'http://www.ohloh.net/'
 OHLOH_API_KEY = '[ENTER OHLOH API_KEY HERE, SEE OHLOH SETUP INSTRUCTIONS]'
-# Ohloh only returns managed projects, manually list other relevant project
-OHLOH_PROJECT_URL_NAMES = []
+OHLOH_CONTRIB_IDS = []
 
 
 # S3 storage for static files
@@ -165,6 +164,7 @@ else:
 
 
 if DEPLOYMENT_MODE == 'dev':
+    CACHE_MIDDLEWARE_SECONDS = 5
     SITE_ROOT_URI = 'http://127.0.0.1:8000/'
     STATIC_URL = SITE_ROOT_URI + 'static/'
     DEBUG = True

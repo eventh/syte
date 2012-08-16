@@ -79,7 +79,7 @@ var require = {
         "jquery": "js/libs/jquery-1.7.2",
     },
     deps: ["jquery"],
-    waitSeconds: 10,
+    waitSeconds: 120,
 };
 {% else %}
 var require = {
@@ -93,6 +93,7 @@ var require = {
 <script src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/javascript">
     require([
+        "jquery",
         "js/libs/handlebars",
         "js/libs/moment",
         "js/libs/spin",

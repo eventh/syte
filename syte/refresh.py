@@ -8,9 +8,9 @@ from syte.views import github, bitbucket, ohloh
 
 def refresh(page):
     mapping = {
-        'github': (github, 'eventh'),
-        'bitbucket': (bitbucket, 'eventh'),
-        'ohloh': (ohloh, 'Eventh'),
+        'github': (github.github, 'eventh'),
+        'bitbucket': (bitbucket.bitbucket, 'eventh'),
+        'ohloh': (ohloh.ohloh, 'Eventh'),
     }
 
     if page not in mapping:

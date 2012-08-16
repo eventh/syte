@@ -1,13 +1,13 @@
-Django>=1.4
-requests>=0.13.4
-PyMeta>=0.5.0
-psycopg2>=2.4.5
-pybars>=0.0.2
-gunicorn>=0.14.6
-greenlet>=0.4.0
-gevent>=0.13.7
-pylibmc>=1.2.3
-django-pylibmc-sasl>=0.2.4
-boto>=2.5.2
-rauth>=0.4.14
+Django==1.4.1
+psycopg2==2.4.5
+requests==0.13.6
+PyMeta==0.5.0
+pybars==0.0.2
+gunicorn==0.14.6
+greenlet==0.4.0
+gevent==0.13.7
+pylibmc==1.2.3
+django-pylibmc-sasl==0.2.4
+boto==2.5.2
+rauth==0.4.15
 -e hg+http://bitbucket.org/jezdez/django-storages#egg=django-storages
