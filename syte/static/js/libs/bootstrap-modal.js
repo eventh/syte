@@ -67,6 +67,10 @@
             that.$element[0].offsetWidth // force reflow
           }
 
+          //this mobile part is custom, im too lasy to extend this feature for this
+          if (isMobileView)
+            that.$element.css('top', (window.pageYOffset + 45) + 'px');
+
           that.$element.addClass('in')
 
           transition ?
