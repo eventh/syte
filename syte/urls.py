@@ -78,6 +78,12 @@ if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
         url(r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud.soundcloud'),
     )
 
+#Documents page
+if settings.DOCUMENTS_PAGE_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^documents/?$', 'syte.views.documents.documents'),
+    )
+
 #Statics: Hacky for now... fix this later...
 urlpatterns += patterns('',
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {

@@ -1,0 +1,16 @@
+<div class="profile modal fade" id="document-list">
+  <ul class="profile-repos">
+    {{#each docs}}
+    <li>
+      <a href="{{ url }}" class="profile-repo-name">{{ title }}</a>
+      {{#if sub}}<span>{{ sub }}</span>{{/if}}
+      {{#if date}}<span>{{ date}}</span>{{/if}}
+      {{#if descr}}
+      <p class="profile-repo-text">
+        {{ descr }}
+      </p>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
