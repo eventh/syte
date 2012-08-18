@@ -55,6 +55,7 @@ def compress_js():
         ('js/components/soundcloud', settings.SOUNDCLOUD_INTEGRATION_ENABLED),
         ('js/components/foursquare', settings.FOURSQUARE_INTEGRATION_ENABLED),
         ('js/components/ohloh', settings.OHLOH_INTEGRATION_ENABLED),
+        ('js/components/documents', settings.DOCUMENTS_PAGE_ENABLED),
     )
 
     includes = ','.join(path for path, include in js_files if include)
@@ -69,8 +70,7 @@ def compress_js():
     print 'JavaScript Combined and Minified: {0}scripts-{1}.min.js'.format(
         OUT_PATH, settings.COMPRESS_REVISION_NUMBER)
 
-    # Minify require.js
-    # TODO: include require.js above
+    # Minify require.js, TODO: include require.js above
     subprocess.check_call(shlex.split(
         'uglifyjs -o {0}require.min.js {1}/static/js/libs/require.js'.format(
             OUT_PATH, PATH_TO_HERE)))

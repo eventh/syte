@@ -32,6 +32,7 @@
       <li><a href="http://www.ohloh.net/accounts/Eventh" id="ohloh-link">Projects</a></li>
       <li><a href="http://github.com/eventh" id="github-link">Github</a></li>
       <li><a href="http://bitbucket.org/eventh" id="bitbucket-link">Bitbucket</a></li>
+      <li><a href="#" id="documents-link">Documents</a></li>
       <li><a href="mailto:eventh@gmail.com?subject=Hello" id="contact-link">Contact</a></li>
       {% comment %}
       <li><a href="http://twitter.com/#!/rigoneri" id="twitter-link">Twitter</a></li>
@@ -67,6 +68,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
     bitbucket_integration_enabled = {% if BITBUCKET_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     ohloh_integration_enabled = {% if OHLOH_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     foursquare_integration_enabled = {% if FOURSQUARE_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
+    documents_page_enabled = {% if DOCUMENTS_PAGE_ENABLED %}true{% else %}false{% endif %},
     disqus_integration_enabled = {% if DISQUS_INTEGRATION_ENABLED %}true{% else %}false{% endif %};
 
 {% if DISQUS_INTEGRATION_ENABLED %}var disqus_shortname = '{{ DISQUS_SHORTNAME }}';{% endif %}
@@ -113,6 +115,7 @@ var require = {
 {% if SOUNDCLOUD_INTEGRATION_ENABLED %}"js/components/soundcloud",{% endif %}
 {% if FOURSQUARE_INTEGRATION_ENABLED %}"js/components/foursquare",{% endif %}
 {% if OHLOH_INTEGRATION_ENABLED %}"js/components/ohloh",{% endif %}
+{% if DOCUMENTS_PAGE_ENABLED %}"js/components/documents",{% endif %}
     ]);
 </script>
 {% else %}

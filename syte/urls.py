@@ -81,7 +81,14 @@ if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
 #Ohloh Integration
 if settings.OHLOH_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        (r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh.ohloh'),)
+        url(r'^ohloh/(?P<username>\w+)/?$', 'syte.views.ohloh.ohloh'),
+    )
+
+#Documents page
+if settings.DOCUMENTS_PAGE_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^documents/?$', 'syte.views.documents.documents'),
+    )
 
 #Static files
 urlpatterns += patterns('django.views.generic.simple',

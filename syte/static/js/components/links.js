@@ -9,6 +9,7 @@ var allComponents = [
   'soundcloud',
   'bitbucket',
   'ohloh',
+  'documents',
   'foursquare'
 ];
 
@@ -60,9 +61,13 @@ function setupLinks() {
         adjustSelection('ohloh');
         setupOhloh(url, this);
       }
-      else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
+      else if (this.id == 'foursquare-link' && foursquare_integration_enabled) {
          adjustSelection('foursquare');
          setupFoursquare(this);
+      }
+      else if (this.id === 'documents-link' && documents_page_enabled) {
+        adjustSelection('documents');
+        setupDocuments(this);
       }
       else {
          window.location = this.href;
