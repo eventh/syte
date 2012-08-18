@@ -6,18 +6,9 @@ import django
 from django.http import HttpResponse
 
 
-def _version(version):
-    return 'v%s' % '.'.join(str(i) for i in version)
-
-
 # List of packages used by Syte
 # {name, description, version, url, license}
 BASE_PACKAGES = [
-    {'name': 'Syte',
-     'url': '//rigoneri.github.com/syte/',
-     'description': 'Copyright (c) 2012, Rodrigo Neri <@rigoneri>',
-     'license': 'MIT'},
-
     {'name': 'Django',
      'url': '//www.djangoproject.com/',
      'version': django.get_version(),
@@ -26,7 +17,7 @@ BASE_PACKAGES = [
      'license': 'BSD'},
 
     {'name': 'Requests',
-     'url': '//docs.python-requests.org/',
+     'url': '//python-requests.org/',
      'version': requests.__version__,
      'description': 'Copyright (c) 2012 Kenneth Reitz',
      'license': 'ISC'},
@@ -60,7 +51,7 @@ BASE_PACKAGES = [
      'url': '//twitter.github.com/bootstrap/javascript.html#modals',
      'version': '2.0.3',
      'description': 'Copyright 2012 Twitter, Inc',
-     'license': 'Apache License, Version 2.0'},
+     'license': 'Apache Version 2.0'},
 
     {'name': 'jQuery URL Parser',
      'url': '//github.com/allmarkedup/jQuery-URL-Parser',
@@ -70,7 +61,7 @@ BASE_PACKAGES = [
     {'name': 'google-code-prettify',
      'url': '//code.google.com/p/google-code-prettify/',
      'description': 'Copyright (C) 2006 Google Inc',
-     'license': 'Apache License, Version 2.0'},
+     'license': 'Apache Version 2.0'},
 ]
 
 

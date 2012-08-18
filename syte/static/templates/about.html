@@ -1,20 +1,23 @@
 <div class="profile about modal fade" id="about-profile">
-  <div class="profile-info profile-doc">
+  <div class="profile-info">
     <button class="close" data-dismiss="modal">×</button>
-    <h3>Software used:<strong>{{ count }}</strong></h3>
+    <h2>About</h2>
+    This site is created with <a href="http://rigoneri.github.com/syte/">Syte</a>,
+    which is written in JavaScript and Python. Additional software used is listed below.
+  </div>
+  <div class="profile-about">
+    <h3>Software used<strong>{{ count }}</strong></h3>
   </div>
   <ul class="profile-doc-list">
-    {{#each package}}
+    {{#each packages}}
     <li>
-      {{#if version}}<div class="profile-doc-date">{{ version }}</div>{{/if}}
+      {{#if version}}<div class="profile-doc-date">v{{ version }}</div>{{/if}}
       <a href="{{ url }}" class="profile-repo-name">{{ name }}</a>
       {{#if description}}
       <p class="profile-repo-text">
         {{ description }}
+        {{#if license}}<br />License: {{ license }}{{/if}}
       </p>
-      {{/if}}
-      {{#if license}}
-      License: {{ license }}
       {{/if}}
     </li>
     {{/each}}

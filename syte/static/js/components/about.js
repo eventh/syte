@@ -19,7 +19,7 @@ function setupAbout(el) {
       var template = Handlebars.compile(view);
       $(template(data)).modal().on('hidden', function () {
         $(this).remove();
-        adjustSelection('home-link');
+        adjustSelection('home');
       });
 
       spinner.stop();
