@@ -28,5 +28,6 @@ def site_pages(request):
     context['GOOGLE_ANALYTICS_TRACKING_ID'] = settings.GOOGLE_ANALYTICS_TRACKING_ID
 
     context['DOCUMENTS_PAGE_ENABLED'] = settings.DOCUMENTS_PAGE_ENABLED
+    context['ABOUT_PAGE_ENABLED'] = settings.ABOUT_PAGE_ENABLED
 
     return context

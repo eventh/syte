@@ -1,6 +1,6 @@
 //Profiles
 .profile {
-  background: #E9E9E9 url('//s3.amazonaws.com/syte/imgs/b.png');
+  background: #E9E9E9 url('/static/imgs/b.png');
 }
 
 .profile-info {
@@ -145,19 +145,19 @@
 }
 
 .profile-watchers {
-  .profile-icons(~"url('//s3.amazonaws.com/syte/imgs/ico-watchers.png') no-repeat");
+  .profile-icons(~"url('/static/imgs/ico-watchers.png') no-repeat");
 }
 
 .profile-forks {
-  .profile-icons(~"url('//s3.amazonaws.com/syte/imgs/ico-forks.png') no-repeat");
+  .profile-icons(~"url('/static/imgs/ico-forks.png') no-repeat");
 }
 
 .profile-comments {
-  .profile-icons(~"url('//s3.amazonaws.com/syte/imgs/ico-comments.png') no-repeat");
+  .profile-icons(~"url('/static/imgs/ico-comments.png') no-repeat");
 }
 
 .profile-likes {
-  .profile-icons(~"url('//s3.amazonaws.com/syte/imgs/ico-likes.png') no-repeat");
+  .profile-icons(~"url('/static/imgs/ico-likes.png') no-repeat");
 }
 
 
@@ -517,10 +517,10 @@
   background: #fff;
 
   .box-shadow();
-
 }
 
 .ohloh-title {
+  border-top: 1px solid #C2C2C2;
   border-bottom: 1px solid #C2C2C2;
   padding: 10px;
 
@@ -533,6 +533,7 @@
     border-bottom: 0;
     color: @adjacent-color;
   }
+
   strong {
     padding: 10px 10px 10px 20px;
     border-left: 1px solid #C2C2C2;
@@ -564,15 +565,6 @@
 //Documents page
 .profile-doc {
   padding: 10px;
-
-  a {
-    font-weight: 500;
-    border-bottom: 0;
-  }
-  a:hover {
-    border-bottom: 0;
-    color: @adjacent-color;
-  }
 
   h3 {
     font-weight: 500;
@@ -607,4 +599,28 @@
 
 .profile-doc-subtitle {
   padding: 4px 0 4px 0;
+}
+
+//About page
+#about-profile > .profile-info a {
+  border-bottom: 0;
+  :hover { color: @adjacent-color; }
+}
+
+.profile-about {
+  padding: 10px;
+  border-top: 1px solid #C2C2C2;
+
+  h3 {
+    font-weight: 500;
+    padding-left: 5px;
+  }
+
+  strong {
+    padding: 10px 14px 10px 20px;
+    border-left: 1px solid #C2C2C2;
+    position: relative;
+    top: -10px;
+    float: right;
+  }
 }

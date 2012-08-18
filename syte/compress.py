@@ -56,6 +56,7 @@ def compress_js():
         ('js/components/foursquare', settings.FOURSQUARE_INTEGRATION_ENABLED),
         ('js/components/ohloh', settings.OHLOH_INTEGRATION_ENABLED),
         ('js/components/documents', settings.DOCUMENTS_PAGE_ENABLED),
+        ('js/components/about', settings.ABOUT_PAGE_ENABLED),
     )
 
     includes = ','.join(path for path, include in js_files if include)

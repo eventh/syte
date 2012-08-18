@@ -10,6 +10,7 @@ var allComponents = [
   'bitbucket',
   'ohloh',
   'documents',
+  'about',
   'foursquare'
 ];
 
@@ -68,6 +69,10 @@ function setupLinks() {
       else if (this.id === 'documents-link' && documents_page_enabled) {
         adjustSelection('documents');
         setupDocuments(this);
+      }
+      else if (this.id == 'about-link' && about_page_enabled) {
+         adjustSelection('about');
+         setupAbout(this);
       }
       else {
          window.location = this.href;

@@ -119,6 +119,10 @@ OHLOH_CONTRIB_IDS = []
 DOCUMENTS_PAGE_ENABLED = True
 
 
+#About Page
+ABOUT_PAGE_ENABLED = True
+
+
 # S3 storage for static files
 AWS_ACCESS_KEY_ID = '[ENTER AWS ACCESS KEY ID HERE]'
 AWS_SECRET_ACCESS_KEY = '[ENTER AWS SECRET ACCESS KEY HERE]'
@@ -157,6 +161,8 @@ STATIC_ROOT = os.path.join(SITE_ROOT, '../static/')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
 )
+
+
 if DEPLOYMENT_MODE == 'dev':
     STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static/'),)
 else:
