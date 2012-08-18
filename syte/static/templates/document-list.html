@@ -1,7 +1,10 @@
 <div class="profile documents modal fade" id="documents-profile">
   <div class="profile-info profile-doc">
     <button class="close" data-dismiss="modal">×</button>
-    <h3>Documents<strong>{{ count }}</strong></h3>
+    <h3>
+      {{#if url}}<a href="{{ url }}">Documents</a>{{else}}Documents{{/if}}
+      <strong>{{ count }}</strong>
+    </h3>
   </div>
   <ul class="profile-doc-list">
     {{#each docs}}
