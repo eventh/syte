@@ -5,19 +5,28 @@ from django.http import HttpResponse
 from django.conf import settings
 
 
+# List of documents to display
+# {file, title, subtitle, description, date, url}
+# Use url to give direct link to file, or file to host yourself.
+ALL_DOCUMENTS = [
+    {'file': 'filename.pdf',
+     'title': 'TODO: document title',
+     'subtitle': 'TODO: add document subtitle',
+     'description': 'TODO: document description',
+     'url': '',
+     'date': 'June 2012'},
+]
+
+
 def documents(request):
-    # List of documents to display.
-    # Each entry consist of {file, title, sub, desc, date}
-    docs = [
-        {'file': 'filename.pdf',
-         'title': 'TODO: add document title',
-         'description': 'TODO: add a description of the document',
-         'date': 'June 2012'},
-    ]
+    docs = ALL_DOCUMENTS
 
     # Add static_url to filenames to create url
     for doc in docs:
-        doc['url'] = '%sfiles/%s' % (settings.MEDIA_URL, doc['file'])
+        if 'url' not in doc:
+            doc['url'] = '%sfiles/%s' % (settings.MEDIA_URL, doc['file'])
 
-    return HttpResponse(json.dumps({'docs': docs, 'count': len(docs)}),
+    context = {'count': len(docs), 'docs': docs, 'url': ''}
+
+    return HttpResponse(json.dumps(context),
                         'application/json; charset=utf-8')
