@@ -49,7 +49,7 @@ function fetchBlogPosts(offset, tag) {
             adjustBlogHeaders();
             prettyPrint();
             setTimeout(setupBlogHeaderScroll, 1000);
-            adjustSelection('home-link');
+            adjustSelection('home');
 
             $('body').trigger("blog-post-loaded");
          });
