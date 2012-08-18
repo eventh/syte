@@ -57,11 +57,11 @@ function setupLinks() {
         adjustSelection('bitbucket');
         setupBitbucket(url, this);
       }
-      else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
+      else if (this.id == 'foursquare-link' && foursquare_integration_enabled) {
          adjustSelection('foursquare');
          setupFoursquare(this);
       }
-      else if (documents_integration_enabled && this.id === 'documents-link') {
+      else if (this.id === 'documents-link' && documents_page_enabled) {
         adjustSelection('documents');
         setupDocuments(this);
       }

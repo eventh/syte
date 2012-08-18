@@ -1,7 +1,7 @@
 function setupDocuments(el) {
   var href = el.href;
 
-  if ($('#document-list').length > 0) {
+  if ($('#documents-profile').length > 0) {
     window.location = href;
     return;
   }

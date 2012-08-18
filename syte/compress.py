@@ -85,7 +85,7 @@ def compress_js():
     if settings.FOURSQUARE_INTEGRATION_ENABLED:
         js_files.append('components/foursquare.js')
 
-    if settings.DOCUMENTS_INTEGRATION_ENABLEd:
+    if settings.DOCUMENTS_PAGE_ENABLED:
         js_files.append('components/documents.js')
 
     combined = ''

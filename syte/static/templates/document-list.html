@@ -1,13 +1,17 @@
-<div class="profile modal fade" id="document-list">
-  <ul class="profile-repos">
+<div class="profile documents modal fade" id="documents-profile">
+  <div class="profile-info profile-doc">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Documents<strong>{{ count }}</strong></h3>
+  </div>
+  <ul class="profile-doc-list">
     {{#each docs}}
     <li>
+      {{#if date}}<div class="profile-doc-date">{{ date }}</div>{{/if}}
       <a href="{{ url }}" class="profile-repo-name">{{ title }}</a>
-      {{#if sub}}<span>{{ sub }}</span>{{/if}}
-      {{#if date}}<span>{{ date}}</span>{{/if}}
-      {{#if descr}}
+      {{#if subtitle}}<div class="profile-doc-subtitle">{{ subtitle }}</div>{{/if}}
+      {{#if description}}
       <p class="profile-repo-text">
-        {{ descr }}
+        {{ description }}
       </p>
       {{/if}}
     </li>
