@@ -8,6 +8,7 @@ var allComponents = [
   'lastfm',
   'soundcloud',
   'bitbucket',
+  'about',
   'foursquare'
 ];
 
@@ -59,6 +60,10 @@ function setupLinks() {
       else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
          adjustSelection('foursquare');
          setupFoursquare(this);
+      }
+      else if (this.id == 'about-link' && about_page_enabled) {
+         adjustSelection('about');
+         setupAbout(this);
       }
       else {
          window.location = this.href;

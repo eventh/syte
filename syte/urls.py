@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     url(r'^post/(?P<post_id>\w+)/?$', 'syte.views.tumblr.blog_post'),
     url(r'^tags/(?P<tag_slug>[\s\w\d-]+)/?$', 'syte.views.tumblr.blog_tags'),
     url(r'^blog.json/?$', 'syte.views.tumblr.blog'),
-    url(r'^about/?$', 'syte.views.home.home'),
     url(r'^/?$', 'syte.views.home.home'),
 )
 
@@ -76,6 +75,16 @@ if settings.LASTFM_INTEGRATION_ENABLED:
 if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
         url(r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud.soundcloud'),
+    )
+
+#Documents page
+if settings.ABOUT_PAGE_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^about/?$', 'syte.views.about.about'),
+    )
+else:
+    urlpatterns += patterns('',
+        url(r'^about/?$', 'syte.views.home.home'),
     )
 
 #Statics: Hacky for now... fix this later...

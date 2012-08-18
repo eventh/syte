@@ -1,0 +1,22 @@
+<div class="profile about modal fade" id="about-profile">
+  <div class="profile-info profile-doc">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Software used:<strong>{{ count }}</strong></h3>
+  </div>
+  <ul class="profile-doc-list">
+    {{#each package}}
+    <li>
+      {{#if version}}<div class="profile-doc-date">{{ version }}</div>{{/if}}
+      <a href="{{ url }}" class="profile-repo-name">{{ name }}</a>
+      {{#if description}}
+      <p class="profile-repo-text">
+        {{ description }}
+      </p>
+      {{/if}}
+      {{#if license}}
+      License: {{ license }}
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</div>
