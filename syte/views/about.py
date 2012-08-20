@@ -17,7 +17,7 @@ from django.conf import settings
 
 # List of packages used by Syte
 # {name, description, version, url, license}
-BASE_PACKAGES = [
+PACKAGES = [
     {'name': 'Django',
      'url': '//www.djangoproject.com/',
      'version': django.get_version(),
@@ -92,18 +92,22 @@ BASE_PACKAGES = [
 
     {'name': 'boto',
      'url': '//github.com/boto/boto',
+     'description': 'Copyright (c) 2006-2012 Mitch Garnaat '
+     '<mitch@garnaat.com> Copyright (c) 2010-2011, Eucalyptus Systems, '
+     'Inc. Copyright (c) 2012 Amazon.com, Inc. or its affiliates.',
      'version': boto.__version__,
      'license': 'MIT'},
 
     {'name': 'django-storages',
      'url': '//django-storages.readthedocs.org/',
+     'description': 'Copyright (c) 2008-2009, see AUTHORS file.',
      'version': storages.__version__,
      'license': 'BSD'},
 
     {'name': 'gunicorn',
      'url': '//gunicorn.org/',
      'version': gunicorn.__version__,
-     'description': '2009,2010 (c) Benoît Chesneau <benoitc@e-engura.org>\n'
+     'description': '2009,2010 (c) Benoît Chesneau <benoitc@e-engura.org> '
      '2009,2010 (c) Paul J. Davis <paul.joseph.davis@gmail.com>.',
      'license': 'MIT'},
 
@@ -134,16 +138,15 @@ BASE_PACKAGES = [
 ]
 
 
+if settings.TWITTER_INTEGRATION_ENABLED:
+    PACKAGES.append({
+        'name': 'rauth', 'url': '//rauth.readthedocs.org/',
+        'version': rauth.__version__, 'license': 'MIT',
+        'description': 'Rauth is Copyright (c) 2012 litl, LLC',
+    })
+
+
 def about(request):
-    packages = BASE_PACKAGES[:]
-
-    if settings.TWITTER_INTEGRATION_ENABLED:
-        packages.append({
-            'name': 'rauth', 'url': '//rauth.readthedocs.org/',
-            'version': rauth.__version__, 'license': 'MIT',
-            'description': 'Rauth is Copyright (c) 2012 litl, LLC',
-        })
-
-    context = {'count': len(packages), 'packages': packages}
+    context = {'count': len(PACKAGES), 'packages': PACKAGES}
     return HttpResponse(json.dumps(context),
                         'application/json; charset=utf-8')
