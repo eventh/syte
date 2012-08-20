@@ -13,12 +13,10 @@
     <li>
       {{#if version}}<div class="profile-doc-date">v{{ version }}</div>{{/if}}
       <a href="{{ url }}" class="profile-repo-name">{{ name }}</a>
-      {{#if description}}
       <p class="profile-repo-text">
         {{ description }}
         {{#if license}}<br />License: {{ license }}{{/if}}
       </p>
-      {{/if}}
     </li>
     {{/each}}
   </ul>

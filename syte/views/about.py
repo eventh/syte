@@ -3,12 +3,15 @@ import json
 
 import requests
 import django
+import gunicorn
+import rauth
 from django.http import HttpResponse
+from django.conf import settings
 
 
 # List of packages used by Syte
 # {name, description, version, url, license}
-BASE_PACKAGES = [
+PACKAGES = [
     {'name': 'Django',
      'url': '//www.djangoproject.com/',
      'version': django.get_version(),
@@ -62,12 +65,31 @@ BASE_PACKAGES = [
      'url': '//code.google.com/p/google-code-prettify/',
      'description': 'Copyright (C) 2006 Google Inc',
      'license': 'Apache Version 2.0'},
+
+    {'name': 'pybars',
+     'url': '//launchpad.net/pybars',
+     'version': '0.0.2',
+     'description': 'Copyright (c) 2012, Canonical Ltd.',
+     'license': 'LGPLv3'},
+
+    {'name': 'gunicorn',
+     'url': '//gunicorn.org/',
+     'version': gunicorn.__version__,
+     'description': '2009,2010 (c) Benoît Chesneau <benoitc@e-engura.org> '
+     '2009,2010 (c) Paul J. Davis <paul.joseph.davis@gmail.com>.',
+     'license': 'MIT'},
 ]
 
 
-def about(request):
-    packages = BASE_PACKAGES[:]
+if settings.TWITTER_INTEGRATION_ENABLED:
+    PACKAGES.append({
+        'name': 'rauth', 'url': '//rauth.readthedocs.org/',
+        'version': rauth.__version__, 'license': 'MIT',
+        'description': 'Rauth is Copyright (c) 2012 litl, LLC',
+    })
 
-    context = {'count': len(packages), 'packages': packages}
+
+def about(request):
+    context = {'count': len(PACKAGES), 'packages': PACKAGES}
     return HttpResponse(json.dumps(context),
                         'application/json; charset=utf-8')
