@@ -22,6 +22,16 @@ def github(request, username):
     context = {'user': user_r.json}
     context.update({'repos': repos_r.json})
 
+    # Get parent repo if it is a fork
+    for repo in context['repos']:
+        if repo['fork']:
+            fork_r = requests.get('{0}repos/{1}/{2}?access_token={3}'.format(
+                settings.GITHUB_API_URL,
+                username,
+                repo['name'],
+                settings.GITHUB_ACCESS_TOKEN))
+            repo['parent'] = fork_r.json['parent']
+
     context['repos'].sort(key=itemgetter('updated_at'), reverse=True)
 
     return HttpResponse(content=json.dumps(context),
@@ -35,7 +45,8 @@ def github_auth(request):
     error = request.GET.get('error_description', None)
 
     if not code and not error:
-        return redirect('{0}?client_id={1}&redirect_uri={2}github/auth/&response_type=code'.format(
+        return redirect('{0}?client_id={1}&redirect_uri={2}'
+                        'github/auth/&response_type=code'.format(
             settings.GITHUB_OAUTH_AUTHORIZE_URL,
             settings.GITHUB_CLIENT_ID,
             settings.SITE_ROOT_URI))

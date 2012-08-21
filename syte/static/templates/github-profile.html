@@ -32,6 +32,13 @@
     {{#each repos}}
     <li>
     <a href="{{ html_url }}" class="profile-repo-name">{{ name }}</a>
+    {{#if parent}}
+    <p class="profile-repo-fork">
+      <a href="{{ parent.html_url }}">Fork of {{ parent.owner.login }} / {{ parent.name }}</a>
+      <a href="{{ parent.html_url }}/watchers" class="profile-watchers">{{ parent.watchers }}</a>
+      <a href="{{ parent.html_url }}/network" class="profile-forks">{{ parent.forks }}</a>
+    </p>
+    {{/if}}
     <p class="profile-repo-text">
       {{ description }}
     </p>
