@@ -5,8 +5,10 @@ import requests
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
 
 
+@never_cache
 def instagram_auth(request):
     context = dict()
     code = request.GET.get('code', None)

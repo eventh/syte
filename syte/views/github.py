@@ -6,6 +6,7 @@ import requests
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 
 
 def github(request, username):
@@ -29,6 +30,7 @@ def github(request, username):
                         content_type=repos_r.headers['content-type'])
 
 
+@never_cache
 def github_auth(request):
     context = dict()
     code = request.GET.get('code', None)
