@@ -75,7 +75,9 @@ os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '')
 os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
 os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
 
-if DEPLOYMENT_MODE == 'dev':
+if os.environ.get('DISABLE_CACHE', False):
+    pass
+elif DEPLOYMENT_MODE == 'dev':
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',

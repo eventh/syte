@@ -134,27 +134,6 @@ AWS_HEADERS = {
 }
 
 
-# Heroku memcachier
-os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '')
-os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
-os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
-
-if os.environ.get('DISABLE_CACHE', False):
-    pass
-elif DEPLOYMENT_MODE == 'dev':
-    CACHES = {
-        'default': {'BACKEND': 'django.core.cache.backends.dummy.DummyCache'}
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': os.environ.get('MEMCACHIER_SERVERS', ''),
-            'BINARY': True,
-        }
-    }
-
-
 # Staticfiles app
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATIC_ROOT = os.path.join(SITE_ROOT, '../static/')
