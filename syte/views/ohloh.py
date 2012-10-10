@@ -69,6 +69,12 @@ def ohloh(request, username):
         values = {i.tag: i.text for i in root.find('result/project')}
         context['projects'].append(values)
 
+    # Remove logo if src is 'no_logo.png'
+    for values in context['projects']:
+        if ('small_logo_url' in values and
+            values['small_logo_url'] == 'no_logo.png'):
+            del values['small_logo_url']
+
     context['total_projects'] = len(context['projects'])
     context['projects'].sort(key=itemgetter('name'))
 
