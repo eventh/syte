@@ -59,6 +59,8 @@ You can use, reproduce and do whatever you want with Syte but I would like you t
 [![jeiting](https://github.com/rigoneri/syte/blob/master/readme-imgs/jeiting.png?raw=true)](http://jacobeiting.com)
 [![chriskun](https://github.com/rigoneri/syte/blob/master/readme-imgs/chriskun.png?raw=true)](http://chrisbolton.me)
 [![denibertovic](https://github.com/rigoneri/syte/blob/master/readme-imgs/deni.png?raw=true)](http://blog.initeq.net)
+[![calebalbritton](https://github.com/rigoneri/syte/blob/master/readme-imgs/calebalbritton.png?raw=true)](http://www.calebalbritton.com)
+[![vincentying](https://github.com/rigoneri/syte/blob/master/readme-imgs/vincentying.png?raw=true)](http://ying82.herokuapp.com)
 
 
 
