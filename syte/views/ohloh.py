@@ -99,6 +99,12 @@ def ohloh(request, username, refresh=False):
         project['commits'] = int(result.find('commits').text)
         context['total_commits'] += project['commits']
 
+    # Remove logo if src is 'no_logo.png'
+    for values in projects.values():
+        if ('small_logo_url' in values and
+            values['small_logo_url'] == 'no_logo.png'):
+            del values['small_logo_url']
+
     # Sort projects by 'last_commit_time'
     context['projects'] = list(projects.values())
     context['total_projects'] = len(context['projects'])
