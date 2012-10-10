@@ -35,8 +35,7 @@ def ohloh(request, username, refresh=False):
     context['kudo_score'] = account.find('kudo_score/kudo_rank').text
 
     # Accounts language experiences
-    total_commits = 0
-    total_lines = 0
+    context['total_lines_changed'] = 0
     context['languages'] = []
     for node in account.find('languages'):
         values = {i.tag: i.text for i in node}
@@ -50,64 +49,50 @@ def ohloh(request, username, refresh=False):
             values['experience'] = '%im' % months
 
         values['name'] = values['name'].capitalize()
+        changed = int(values['total_lines_changed'].replace(',', ''))
+        context['total_lines_changed'] += changed
         context['languages'].append(values)
 
-        #total_commits += int(values['total_commits'].replace(',', ''))
-        total_lines += int(values['total_lines_changed'].replace(',', ''))
-
     context['total_languages'] = len(context['languages'])
-    context['total_commits'] = total_commits
-    context['total_lines_changed'] = total_lines
 
     # Project managed by 'username'
     man_r = requests.get('{0}accounts/{1}/projects.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
-    root = ElementTree.fromstring(man_r.text)
-    tmp = [{i.tag: i.text for i in node} for node in root.find('result')]
-    projects = {}
-    for project in tmp:
-        project['manager'] = True
-        project_id = int(project['id'])
-        if project_id in (k for k, v in settings.OHLOH_CONTRIB_IDS):  # XXX
-            projects[project_id] = project
-    context['managed_projects'] = len(projects)
+    results = ElementTree.fromstring(man_r.text).find('result')
+    managed_ids = {node.find('id').text for node in results}
+    context['managed_projects'] = len(managed_ids)
 
-    # Other projects 'username' has contributed to
-    for project_id, contrib in settings.OHLOH_CONTRIB_IDS:
-        if project_id not in projects:
-            pro_r = requests.get('{0}projects/{1}.xml?api_key={2}'.format(
-                settings.OHLOH_API_URL, project_id, settings.OHLOH_API_KEY))
-            root = ElementTree.fromstring(pro_r.text)
-            tmp = {i.tag: i.text for i in root.find('result/project')}
-            projects[int(tmp['id'])] = tmp
+    # Projects contributed to
+    context['projects'] = []
+    context['total_commits'] = 0
+    pro_r = requests.get('{0}accounts/{1}/positions.xml?api_key={2}'.format(
+        settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
+    for project in ElementTree.fromstring(pro_r.text).find('result'):
+        values = {i.tag: i.text for i in project}
+        values['contribution_url'] = values['html_url']
+        values.update({i.tag: i.text for i in project.find('project')})
 
-    # Contributions to each project and commits
-    for project_id, contrib_id in settings.OHLOH_CONTRIB_IDS:
-        project = projects[project_id]
+        if not values['title'] and values['id'] in managed_ids:
+            values['title'] = 'Manager'
 
-        # Find contributions tied to our account id
-        pro_r = requests.get(
-            '{0}projects/{1}/contributors/{2}.xml?api_key={3}'.format(
-                settings.OHLOH_API_URL, project_id,
-                contrib_id, settings.OHLOH_API_KEY))
-        root = ElementTree.fromstring(pro_r.text)
-
-        result = root.find('result/contributor_fact')
-        project['contributor_id'] = str(contrib_id)
-        project['language'] = result.find('primary_language_nice_name').text
-        project['last_commit_time'] = result.find('last_commit_time').text
-        project['commits'] = int(result.find('commits').text)
-        context['total_commits'] += project['commits']
-
-    # Remove logo if src is 'no_logo.png'
-    for values in projects.values():
         if ('small_logo_url' in values and
             values['small_logo_url'] == 'no_logo.png'):
             del values['small_logo_url']
 
-    # Sort projects by 'last_commit_time'
-    context['projects'] = list(projects.values())
+        context['total_commits'] += int(values['commits'])
+        context['projects'].append(values)
+
     context['total_projects'] = len(context['projects'])
+
+    # Contributions to each project and commits
+    for project in context['projects']:
+        con_r = requests.get('{0}.xml?api_key={1}'.format(
+            project['contribution_url'], settings.OHLOH_API_KEY))
+        root = ElementTree.fromstring(con_r.text)
+        result = root.find('result/contributor_fact')
+        project['language'] = result.find('primary_language_nice_name').text
+        project['last_commit_time'] = result.find('last_commit_time').text
+
     context['projects'].sort(key=itemgetter('last_commit_time'), reverse=True)
 
     # Cache content

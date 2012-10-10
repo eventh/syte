@@ -59,6 +59,8 @@ You can use, reproduce and do whatever you want with Syte but I would like you t
 [![jeiting](https://github.com/rigoneri/syte/blob/master/readme-imgs/jeiting.png?raw=true)](http://jacobeiting.com)
 [![chriskun](https://github.com/rigoneri/syte/blob/master/readme-imgs/chriskun.png?raw=true)](http://chrisbolton.me)
 [![denibertovic](https://github.com/rigoneri/syte/blob/master/readme-imgs/deni.png?raw=true)](http://blog.initeq.net)
+[![calebalbritton](https://github.com/rigoneri/syte/blob/master/readme-imgs/calebalbritton.png?raw=true)](http://www.calebalbritton.com)
+[![vincentying](https://github.com/rigoneri/syte/blob/master/readme-imgs/vincentying.png?raw=true)](http://ying82.herokuapp.com)
 
 
 
@@ -127,7 +129,9 @@ Syte has Bitbucket integration, which means that when someone clicks on a link t
 
 ### Ohloh.net
 
-Syte has Ohloh.net integration, TODO(even)!!
+Syte has Ohloh.net integration, which means that when someone clicks on a link that points to a user's Ohloh profile the profile is loaded within your site along with a list of projects the user has contributed to, and language experiences recorded by Ohloh.
+
+TODO: add ohloh.net integration image
 
 
 ## Responsive UI
@@ -343,12 +347,20 @@ To display the fork count on repositories set `BITBUCKET_SHOW_FORKS` to True.  T
 The Bitbucket API throttles the user resource to 100 calls every 30 minutes.
 
 
+### Setting up Ohloh.net integration
+
+The Ohloh integration require a registered API key. Sign in to your Ohloh account and visit [Ohloh API Key Sign Up page](http://www.ohloh.com/accounts/me/api_keys/new) to register an API key. Enter the API key into `OHLOH_API_KEY` in your **syte_settings.py** located in `syte > syte_settings.py`.
+
+Ohloh API only list projects you manage, but you can add other project names in `OHLOH_OTHER_PROJECTS` in **syte_settings.py**. Each extra project requires an additional API call.
+
+#### Comment
+The Ohloh API key is limited to 1000 requests per day. You can see the status and usage of your API key on [Ohloh API Key page](https://www.ohloh.net/accounts/me/api_keys).
+
 
 
 ## Running & Deployment Instructions
 
 Now that you have everything setup and ready to go we will be able to run the project locally and deploy to Heroku with the instructions below. Please note that these instructions are for Mac, which should be the same for Linux systems. If you have problems with these instructions on Windows, let me know or send a pull request.
-
 
 
 

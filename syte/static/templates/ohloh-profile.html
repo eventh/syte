@@ -46,9 +46,9 @@
         </p>
         <ul class="profile-repo-stats">
           <li>{{ language }}</li>
-          <li class="profile-repo-item"><a href="{{ html_url }}/contributors/{{ contributor_id }}">Commits: {{ commits }}</a></li>
-          {{#if manager }}
-          <li class="profile-repo-item">Manager</li>
+          <li class="profile-repo-item"><a href="{{ contribution_url }}">Commits: {{ commits }}</a></li>
+          {{#if title }}
+          <li class="profile-repo-item">{{ title }}</li>
           {{/if}}
         </ul>
       </li>
