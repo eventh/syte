@@ -44,6 +44,13 @@
         <p class="profile-repo-text">
         {{ description }}
         </p>
+        <ul class="profile-repo-stats">
+          <li>{{ language }}</li>
+          <li class="profile-repo-item"><a href="{{ contribution_url }}">Commits: {{ commits }}</a></li>
+          {{#if title }}
+          <li class="profile-repo-item">{{ title }}</li>
+          {{/if}}
+        </ul>
       </li>
       {{/each}}
     </ul>

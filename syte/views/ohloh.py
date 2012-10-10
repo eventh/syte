@@ -11,6 +11,7 @@ from syte.views.home import server_error
 
 
 def ohloh(request, username):
+    """http://www.ohloh.net integration."""
     r = requests.get('{0}accounts/{1}.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
 
@@ -29,8 +30,7 @@ def ohloh(request, username):
     context['kudo_score'] = account.find('kudo_score/kudo_rank').text
 
     # Accounts language experiences
-    total_commits = 0
-    total_lines = 0
+    context['total_lines_changed'] = 0
     context['languages'] = []
     for node in account.find('languages'):
         values = {i.tag: i.text for i in node}
@@ -44,39 +44,51 @@ def ohloh(request, username):
             values['experience'] = '%im' % months
 
         values['name'] = values['name'].capitalize()
+        changed = int(values['total_lines_changed'].replace(',', ''))
+        context['total_lines_changed'] += changed
         context['languages'].append(values)
 
-        total_commits += int(values['total_commits'].replace(',', ''))
-        total_lines += int(values['total_lines_changed'].replace(',', ''))
-
     context['total_languages'] = len(context['languages'])
-    context['total_commits'] = total_commits
-    context['total_lines_changed'] = total_lines
 
     # Project managed by 'username'
     man_r = requests.get('{0}accounts/{1}/projects.xml?api_key={2}'.format(
         settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
-    root = ElementTree.fromstring(man_r.text)
-    context['projects'] = [{i.tag: i.text for i in node}
-                           for node in root.find('result')]
-    context['managed_projects'] = len(context['projects'])
+    results = ElementTree.fromstring(man_r.text).find('result')
+    managed_ids = {node.find('id').text for node in results}
+    context['managed_projects'] = len(managed_ids)
 
-    # Other projects 'username' has contributed to
-    for name in settings.OHLOH_OTHER_PROJECTS:
-        pro_r = requests.get('{0}p/{1}.xml?api_key={2}'.format(
-            settings.OHLOH_API_URL, name, settings.OHLOH_API_KEY))
-        root = ElementTree.fromstring(pro_r.text)
-        values = {i.tag: i.text for i in root.find('result/project')}
-        context['projects'].append(values)
+    # Projects contributed to
+    context['projects'] = []
+    context['total_commits'] = 0
+    pro_r = requests.get('{0}accounts/{1}/positions.xml?api_key={2}'.format(
+        settings.OHLOH_API_URL, username, settings.OHLOH_API_KEY))
+    for project in ElementTree.fromstring(pro_r.text).find('result'):
+        values = {i.tag: i.text for i in project}
+        values['contribution_url'] = values['html_url']
+        values.update({i.tag: i.text for i in project.find('project')})
 
-    # Remove logo if src is 'no_logo.png'
-    for values in context['projects']:
+        if not values['title'] and values['id'] in managed_ids:
+            values['title'] = 'Manager'
+
         if ('small_logo_url' in values and
             values['small_logo_url'] == 'no_logo.png'):
             del values['small_logo_url']
 
+        context['total_commits'] += int(values['commits'])
+        context['projects'].append(values)
+
     context['total_projects'] = len(context['projects'])
-    context['projects'].sort(key=itemgetter('name'))
+
+    # Contributions to each project and commits
+    for project in context['projects']:
+        con_r = requests.get('{0}.xml?api_key={1}'.format(
+            project['contribution_url'], settings.OHLOH_API_KEY))
+        root = ElementTree.fromstring(con_r.text)
+        result = root.find('result/contributor_fact')
+        project['language'] = result.find('primary_language_nice_name').text
+        project['last_commit_time'] = result.find('last_commit_time').text
+
+    context['projects'].sort(key=itemgetter('last_commit_time'), reverse=True)
 
     return HttpResponse(json.dumps(context),
                         'application/json; charset=utf-8', r.status_code)
