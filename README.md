@@ -351,10 +351,8 @@ The Bitbucket API throttles the user resource to 100 calls every 30 minutes.
 
 The Ohloh integration require a registered API key. Sign in to your Ohloh account and visit [Ohloh API Key Sign Up page](http://www.ohloh.com/accounts/me/api_keys/new) to register an API key. Enter the API key into `OHLOH_API_KEY` in your **syte_settings.py** located in `syte > syte_settings.py`.
 
-Ohloh API only list projects you manage, but you can add other project names in `OHLOH_OTHER_PROJECTS` in **syte_settings.py**. Each extra project requires an additional API call.
-
 #### Comment
-The Ohloh API key is limited to 1000 requests per day. You can see the status and usage of your API key on [Ohloh API Key page](https://www.ohloh.net/accounts/me/api_keys).
+The Ohloh API key is limited to 1000 requests per day. You can see the status and usage of your API key on [Ohloh API Key page](https://www.ohloh.net/accounts/me/api_keys). Each project you have contributed to will require an API request.
 
 
 
