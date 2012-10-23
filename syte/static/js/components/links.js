@@ -74,7 +74,8 @@ function setupLinks() {
       else if (this.id == 'about-link' && about_page_enabled) {
          adjustSelection('about');
          setupAbout(this);
-      else if(this.id == 'tent-link' && tent_integration_enabled) {
+      }
+      else if (this.id == 'tent-link' && tent_integration_enabled) {
          adjustSelection('tent');
          setupTent(this);
       }
