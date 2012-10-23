@@ -69,6 +69,13 @@ FOURSQUARE_OAUTH_ACCESS_TOKEN_URL = 'https://foursquare.com/oauth2/access_token'
 GOOGLE_ANALYTICS_TRACKING_ID = ''
 
 
+#Woopra
+WOOPRA_TRACKING_DOMAIN = ''
+WOOPRA_TRACKING_IDLE_TIMEOUT = 300000  # 5 minutes
+WOOPRA_TRACKING_INCLUDE_QUERY = False
+
+
+
 #Disqus Integration
 DISQUS_INTEGRATION_ENABLED = False
 DISQUS_SHORTNAME = ''
@@ -78,8 +85,6 @@ DISQUS_SHORTNAME = ''
 LASTFM_INTEGRATION_ENABLED = True
 LASTFM_API_URL = 'http://ws.audioscrobbler.com/2.0/'
 LASTFM_API_KEY = '[ENTER LASTFM API_KEY HERE, SEE LASTFM SETUP INSTRUCTIONS]'
-LASTFM_USERNAME = '[ENTER LASTFM username HERE, SEE LASTFM SETUP INSTRUCTIONS]'
-
 
 #SoundCloud Integration
 SOUNDCLOUD_INTEGRATION_ENABLED = True
@@ -95,6 +100,13 @@ BITBUCKET_API_URL = 'https://api.bitbucket.org/1.0/'
 # Forks count require one connection for each repository,
 # set BITBUCKET_SHOW_FORKS to false to disable
 BITBUCKET_SHOW_FORKS = False
+
+#Tent.io Integration
+TENT_INTEGRATION_ENABLED = True
+TENT_ENTITY_URI = '[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is'
+TENT_FEED_URL = '[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is'
+
+
 
 
 if DEPLOYMENT_MODE == 'dev':

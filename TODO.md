@@ -20,5 +20,9 @@ List of services to add integration for:
     - Etsy
     - Fitbit
     - Bitbucket [DONE]
+    - Stack Overflow
+    - Slideshare
+    - Tent.io [DONE]
+    - Quora
 
 List taken from [Syte's Unexpected Traction and Numbers](http://rigoneri.com/post/25804668500)
