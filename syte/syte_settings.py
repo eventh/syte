@@ -86,7 +86,6 @@ WOOPRA_TRACKING_IDLE_TIMEOUT = 300000  # 5 minutes
 WOOPRA_TRACKING_INCLUDE_QUERY = False
 
 
-
 #Disqus Integration
 DISQUS_INTEGRATION_ENABLED = False
 DISQUS_SHORTNAME = ''
@@ -96,6 +95,7 @@ DISQUS_SHORTNAME = ''
 LASTFM_INTEGRATION_ENABLED = False
 LASTFM_API_URL = 'http://ws.audioscrobbler.com/2.0/'
 LASTFM_API_KEY = '[ENTER LASTFM API_KEY HERE, SEE LASTFM SETUP INSTRUCTIONS]'
+
 
 #SoundCloud Integration
 SOUNDCLOUD_INTEGRATION_ENABLED = False
@@ -112,12 +112,11 @@ BITBUCKET_API_URL = 'https://api.bitbucket.org/1.0/'
 # set BITBUCKET_SHOW_FORKS to false to disable
 BITBUCKET_SHOW_FORKS = False
 
+
 #Tent.io Integration
-TENT_INTEGRATION_ENABLED = True
+TENT_INTEGRATION_ENABLED = False
 TENT_ENTITY_URI = '[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is'
 TENT_FEED_URL = '[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is'
-
-
 
 
 #Ohloh Integration
