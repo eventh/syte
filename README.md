@@ -2,7 +2,7 @@
 
 Syte is a really simple but powerful packaged personal site that has social integrations like Twitter, GitHub, Dribbble, Instagram, Foursquare, Tumblr, Last.fm, SoundCloud and Bitbucket. You can see it in action on [my personal site](http://rigoneri.com).
 
-### There is only one rule
+### There is only one rule/suggestion
 
 You can use, reproduce and do whatever you want with Syte but I would like you to choose a different adjacent color as the ones used by the people below. Once you have chosen your color and deployed your Syte based site, please send a pull request with an image of you containing the color on the border like the ones below. The image needs to be 60x60 px.
 
@@ -61,7 +61,14 @@ You can use, reproduce and do whatever you want with Syte but I would like you t
 [![denibertovic](https://github.com/rigoneri/syte/blob/master/readme-imgs/deni.png?raw=true)](http://blog.initeq.net)
 [![calebalbritton](https://github.com/rigoneri/syte/blob/master/readme-imgs/calebalbritton.png?raw=true)](http://www.calebalbritton.com)
 [![vincentying](https://github.com/rigoneri/syte/blob/master/readme-imgs/vincentying.png?raw=true)](http://ying82.herokuapp.com)
-
+[![danielmayo](https://github.com/rigoneri/syte/blob/master/readme-imgs/danmayo.png?raw=true)](http://www.danielmayo.co.uk/)
+[![krisrang](https://github.com/rigoneri/syte/blob/master/readme-imgs/krisrang.png?raw=true)](http://www.kristjanrang.eu)
+[![tbergeron](https://github.com/rigoneri/syte/blob/master/readme-imgs/tbergeron.png?raw=true)](http://tbergeron.com)
+[![mihan007](https://github.com/rigoneri/syte/blob/master/readme-imgs/mihan007.png?raw=true)](http://mihan007.com)
+[![pbouda](https://github.com/pbouda/syte/blob/master/readme-imgs/pbouda.png?raw=true)](http://www.peterbouda.eu)
+[![garethwestern](https://github.com/rigoneri/syte/blob/master/readme-imgs/garethwestern.png?raw=true)](http://garethwestern.com)
+[![birarda](https://github.com/rigoneri/syte/blob/master/readme-imgs/birarda.png?raw=true)](http://www.birarda.com)
+[![mraxilus](https://github.com/mraxilus/syte/blob/master/readme-imgs/mraxilus.png?raw=true)](http://mraxil.us)
 
 
 ## Social Integrations
@@ -126,6 +133,11 @@ Syte has Bitbucket integration, which means that when someone clicks on a link t
 
 ![Syte Bitbucket](https://github.com/rigoneri/syte/blob/master/readme-imgs/f-8.png?raw=true)
 
+### Tent.io
+
+Syte has Tent.io integration, which means that you can show your Tent.io public posts within your site like a profile.
+
+![Syte Tent.io](https://github.com/rigoneri/syte/blob/master/readme-imgs/f-10.png?raw=true)
 
 ### Ohloh.net
 
@@ -135,7 +147,7 @@ TODO: add ohloh.net integration image
 
 
 ## Responsive UI
- 
+
 Syte is responsive, which means that it scales down to a mobile device screen size.
 
 ![Syte Responsive 1](https://github.com/rigoneri/syte/blob/master/readme-imgs/f-r-1.png?raw=true) ![Syte Responsive 1](https://github.com/rigoneri/syte/blob/master/readme-imgs/f-r-2.png?raw=true)
@@ -265,7 +277,7 @@ You don't have to do anything to setup the Dribbble integration. If you want to 
 
 Instagram has the same level of security as GitHub and similar steps on getting the access token ourselves. To get started go to <http://instagram.com/developer/>, sign in and crate a new client by clicking on the ***Manage Clients*** link on the top right side.
 
-Enter the ***Application Name***, ***Description***, ***Website*** and ***OAuth redirect_Uri***. For the OAuth redirect_uri enter `http://127.0.0.1:8000/instagram/auth` for now since we will get the access token while running it locally. Once you are done registering your client you will be given the ***Client ID*** and ***Client Secret***.
+Enter the ***Application Name***, ***Description***, ***Website*** and ***OAuth redirect_Uri***. For the OAuth redirect_uri enter `http://127.0.0.1:8000/instagram/auth/` for now since we will get the access token while running it locally. The trailing slash is required for Instagram not to complain that the redirect_Uri is wrong. Once you are done registering your client you will be given the ***Client ID*** and ***Client Secret***.
 
 Once you have those two items from Instagram you have to enter them in your **syte_settings.py** located in `syte > syte_settings.py`. Once you open that file enter the following:
 
@@ -330,7 +342,7 @@ In order to setup the SoundCloud integration you first need to create a SoundClo
 Inside **syte_settings.py** there are two other options to configure how your SoundCloud tracks will be shown.
 
 * `SOUNDCLOUD_SHOW_ARTWORK` (Boolean) set this option to true if you want to show your track artwork on page.
-* `SOUNDCLOUD_PLAYER_COLOR` you can set your widget theme color here. Use Hex values only without `#` 
+* `SOUNDCLOUD_PLAYER_COLOR` you can set your widget theme color here. Use Hex values only without `#`
 
 If you want to turn off SoundCloud integration just set `SOUNDCLOUD_INTEGRATION_ENABLED` to False.
 
@@ -353,6 +365,18 @@ The Ohloh integration require a registered API key. Sign in to your Ohloh accoun
 
 #### Comment
 The Ohloh API key is limited to 1000 requests per day. You can see the status and usage of your API key on [Ohloh API Key page](https://www.ohloh.net/accounts/me/api_keys). Each project you have contributed to will require an API request.
+
+
+### Setting up Tent.io integration
+
+The Tent.io integration does not make any authenticated calls nor does it require a registered API key.
+
+If you want to turn off Tent.io integration just set `TENT_INTEGRATION_ENABLED` to False.
+
+Inside **syte_settings.py** there are two other options to configure your Tent.io entity.
+
+* ***Your Entity-URI*** under `TENT_ENTITY_URI`
+* ***URL to a Feed or Tent-Status*** under `TENT_FEED_URL`
 
 
 

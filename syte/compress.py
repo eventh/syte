@@ -54,6 +54,7 @@ def compress_js():
         ('js/components/bitbucket', settings.BITBUCKET_INTEGRATION_ENABLED),
         ('js/components/soundcloud', settings.SOUNDCLOUD_INTEGRATION_ENABLED),
         ('js/components/foursquare', settings.FOURSQUARE_INTEGRATION_ENABLED),
+        ('js/components/tent.js', settings.TENT_INTEGRATION_ENABLED),
         ('js/components/ohloh', settings.OHLOH_INTEGRATION_ENABLED),
         ('js/components/documents', settings.DOCUMENTS_PAGE_ENABLED),
         ('js/components/about', settings.ABOUT_PAGE_ENABLED),

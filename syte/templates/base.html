@@ -42,6 +42,7 @@
       <li><a href="http://instagr.am/p/Lau1VrEPbt" id="instagram-link">Instagram</a></li>
       <li><a href="http://lastfm.com/user/rigoneri" id="lastfm-link">Last.fm</a></li>
       <li><a href="https://foursquare.com/user/8786308" id="foursquare-link">Foursquare</a></li>
+      <li><a href="http://tent.henklein.com" id="tent-link">Tent.io</a></li>
       <li><a href="http://soundcloud.com/guram-kajaia" id="soundcloud-link">Soundcloud</a></li>
       <li><a href="http://bitbucket.org/rigoneri" id="bitbucket-link">Bitbucket</a></li>
       <li><a href="mailto:contact@rigoneri.com?subject=Hello" id="contact-link">Contact</a></li>
@@ -71,9 +72,14 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
     foursquare_integration_enabled = {% if FOURSQUARE_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     documents_page_enabled = {% if DOCUMENTS_PAGE_ENABLED %}true{% else %}false{% endif %},
     about_page_enabled = {% if ABOUT_PAGE_ENABLED %}true{% else %}false{% endif %},
-    disqus_integration_enabled = {% if DISQUS_INTEGRATION_ENABLED %}true{% else %}false{% endif %};
+    disqus_integration_enabled = {% if DISQUS_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
+    tent_integration_enabled = {% if TENT_INTEGRATION_ENABLED %}true{% else %}false{% endif %};
 
 {% if DISQUS_INTEGRATION_ENABLED %}var disqus_shortname = '{{ DISQUS_SHORTNAME }}';{% endif %}
+{% if TENT_INTEGRATION_ENABLED %}
+    var tent_entity_uri = '{{ TENT_ENTITY_URI }}';
+    var tent_feed_url = '{{ TENT_FEED_URL }}';
+{% endif %}
 {% if DEV_DEPLOYMENT_MODE %}
 var require = {
     baseUrl: "{{ STATIC_URL }}",
@@ -116,11 +122,13 @@ var require = {
 {% if DISQUS_INTEGRATION_ENABLED %}"js/components/disqus",{% endif %}
 {% if SOUNDCLOUD_INTEGRATION_ENABLED %}"js/components/soundcloud",{% endif %}
 {% if FOURSQUARE_INTEGRATION_ENABLED %}"js/components/foursquare",{% endif %}
+{% if TENT_INTEGRATION_ENABLED %}"js/components/tent.js",{% endif %}
 {% if OHLOH_INTEGRATION_ENABLED %}"js/components/ohloh",{% endif %}
 {% if DOCUMENTS_PAGE_ENABLED %}"js/components/documents",{% endif %}
 {% if ABOUT_PAGE_ENABLED %}"js/components/about",{% endif %}
     ]);
 </script>
+
 {% else %}
 <script data-main="{{ STATIC_URL }}min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js" src="{{ STATIC_URL }}min/require.min.js"></script>
 {% endif %}
@@ -128,6 +136,29 @@ var require = {
 {% block extra_js %}{% endblock %}
 <script type="text/javascript">
 {% block extra_inline_js %}{% endblock %}
+
+{% if WOOPRA_TRACKING_DOMAIN %}
+// Start of woopra code
+function woopraReady(tracker) {
+    tracker.setDomain("{{WOOPRA_TRACKING_DOMAIN}}");
+    tracker.setIdleTimeout({{WOOPRA_TRACKING_IDLE_TIMEOUT}});
+    {% if WOOPRA_INCLUDE_QUERY %}
+    tracker.trackPageview({type:'pageview',url:window.location.pathname+window.location.search,title:document.title});
+    {% else %}
+    tracker.track();
+    {% endif %}
+    return false;
+}
+(function() {
+    var wsc = document.createElement('script');
+    wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
+    wsc.type = 'text/javascript';
+    wsc.async = true;
+    var ssc = document.getElementsByTagName('script')[0];
+    ssc.parentNode.insertBefore(wsc, ssc);
+})();
+// End of woopra code
+{% endif %}
 
 {% if GOOGLE_ANALYTICS_TRACKING_ID %}
 var _gaq = _gaq || [];
@@ -141,3 +172,4 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 {% endif %}
 </script>
 </body>
+</html>
