@@ -27,32 +27,32 @@ PACKAGES = [
 
     {'name': 'RequireJS',
      'url': '//github.com/jrburke/requirejs',
-     'version': '1.0.8',
+     'version': '2.1.2',
      'description': 'Copyright (c) 2010-2012, The Dojo Foundation '
      'All Rights Reserved',
      'license': 'MIT'},
 
     {'name': 'handlebars',
      'url': '//handlebarsjs.com/',
-     'version': '1.0.beta.6',
+     'version': '1.0.rc.1',
      'description': 'Copyright (C) 2011 by Yehuda Katz',
      'license': 'MIT'},
 
     {'name': 'Moment.js',
      'url': '//momentjs.com/',
-     'version': '1.6.2',
+     'version': '1.7.2',
      'description': 'Copyright (c) 2011-2012 Tim Wood',
      'license': 'MIT'},
 
     {'name': 'spin.js',
      'url': '//fgnass.github.com/spin.js/',
-     'version': '1.2.5',
+     'version': '1.2.7',
      'description': 'Copyright (c) 2011 Felix Gnass [fgnass at neteye dot de]',
      'license': 'MIT'},
 
     {'name': 'bootstrap-modal.js',
      'url': '//twitter.github.com/bootstrap/javascript.html#modals',
-     'version': '2.0.3',
+     'version': '2.2.1',
      'description': 'Copyright 2012 Twitter, Inc',
      'license': 'Apache Version 2.0'},
 
@@ -68,7 +68,7 @@ PACKAGES = [
 
     {'name': 'pybars',
      'url': '//launchpad.net/pybars',
-     'version': '0.0.2',
+     'version': '0.0.4',
      'description': 'Copyright (c) 2012, Canonical Ltd.',
      'license': 'LGPLv3'},
 
