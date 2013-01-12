@@ -7,10 +7,11 @@ handler404 = 'syte.views.home.page_not_found_error'
 handler500 = 'syte.views.home.server_error'
 
 urlpatterns = patterns('',
-    url(r'^post/(?P<post_id>\w+)/?$', 'syte.views.tumblr.blog_post'),
-    url(r'^tags/(?P<tag_slug>[\s\w\d-]+)/?$', 'syte.views.tumblr.blog_tags'),
-    url(r'^blog.json/?$', 'syte.views.tumblr.blog'),
+    url(r'^post/(?P<post_id>\w+)/?$', 'syte.views.blog.blog_post'),
+    url(r'^tags/(?P<tag_slug>[\s\w\d-]+)/?$', 'syte.views.blog.blog_tags'),
+    url(r'^blog.json/?$', 'syte.views.blog.blog'),
     url(r'^about/?$', 'syte.views.home.home'),
+    url(r'^rss/?$', 'syte.views.home.rss'),
     url(r'^/?$', 'syte.views.home.home'),
 )
 
@@ -28,7 +29,7 @@ if settings.GITHUB_OAUTH_ENABLED:
 
 if settings.GITHUB_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
-        url(r'^github/(?P<username>\w+)/?$', 'syte.views.github.github'),
+        url(r'^github/(?P<username>[\-\w]+)/?$', 'syte.views.github.github'),
     )
 
 #Bitbucket Integration
@@ -76,6 +77,18 @@ if settings.LASTFM_INTEGRATION_ENABLED:
 if settings.SOUNDCLOUD_INTEGRATION_ENABLED:
     urlpatterns += patterns('',
         url(r'^soundcloud/(?P<username>\S+)/?$', 'syte.views.soundcloud.soundcloud'),
+    )
+
+#Steam Integration
+if settings.STEAM_INTEGRATION_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^steam/(?P<username>\S+)/?$', 'syte.views.steam.steam'),
+    )
+
+#StackOverflow Integration
+if settings.STACKOVERFLOW_INTEGRATION_ENABLED:
+    urlpatterns += patterns('',
+        url(r'^stackoverflow/(?P<userid>[\-\w]+)/?$', 'syte.views.stackoverflow.stackoverflow'),
     )
 
 #Statics: Hacky for now... fix this later...
