@@ -9,7 +9,10 @@ var allComponents = [
   'soundcloud',
   'bitbucket',
   'about',
-  'foursquare'
+  'foursquare',
+  'tent',
+  'steam',
+  'stackoverflow'
 ];
 
 function setupLinks() {
@@ -64,6 +67,18 @@ function setupLinks() {
       else if (this.id == 'about-link' && about_page_enabled) {
          adjustSelection('about');
          setupAbout(this);
+      }
+      else if(this.id == 'tent-link' && tent_integration_enabled) {
+         adjustSelection('tent');
+         setupTent(this);
+      }
+      else if (this.id == 'steam-link' && steam_integration_enabled) {
+        adjustSelection('steam');
+        setupSteam(url, this);
+      }
+      else if (this.id == 'stackoverflow-link' && stackoverflow_integration_enabled) {
+         adjustSelection('stackoverflow');
+         setupStackoverflow(url, this);
       }
       else {
          window.location = this.href;
