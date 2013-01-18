@@ -8,11 +8,12 @@
 ;(function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD available; use anonymous module
-		if ( typeof jQuery !== 'undefined' ) {
+        // HACK: can't have two anonymous define in a single file for r.js.
+		//if ( typeof jQuery !== 'undefined' ) {
 			define(['jquery'], factory);	
-		} else {
-			define([], factory);
-		}
+		//} else {
+		//	define([], factory);
+		//}
 	} else {
 		// No AMD available; mutate global vars
 		if ( typeof jQuery !== 'undefined' ) {
