@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.views.generic.simple import direct_to_template
 from django.conf.urls import patterns, url
 from django.conf import settings
 
@@ -113,8 +114,10 @@ else:
     )
 
 #Static files
-urlpatterns += patterns('django.views.generic.simple',
-    url(r'^favicon\.ico$', 'redirect_to',
+urlpatterns += patterns('',
+    url(r'^robots\.txt$', direct_to_template,
+        {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
         {'url': settings.STATIC_URL + 'imgs/favicon.ico'}),)
 if settings.DEBUG:
     urlpatterns += patterns('django.contrib.staticfiles.views',

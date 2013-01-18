@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   {% block metadescription %}<meta name="description" content="Personal website and blog of open source developer, Even Wiik Thomassen" />{% endblock %}
-  <meta name="keywords" content="Even Wiik Thomassen, Eventh, developer, python" />
+  {% block metakeyworkds %}<meta name="keywords" content="Even Wiik Thomassen, Eventh, developer, python" />{% endblock %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block pagetitle %}Even Wiik Thomassen{% endblock %}</title>
   <!--[if lt IE 9]><script src="{{ STATIC_URL }}min/html5.js"></script><![endif]-->
