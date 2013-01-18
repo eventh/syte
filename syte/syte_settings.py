@@ -10,7 +10,7 @@ if os.environ.get('SYTE_DEV_DEPLOYMENT', False):
 else:
     DEPLOYMENT_MODE = 'prod'
 
-COMPRESS_REVISION_NUMBER = '1.0'
+COMPRESS_REVISION_NUMBER = '1.1'
 
 BLOG_PLATFORM = 'tumblr'  # Wordpress or tumblr
 

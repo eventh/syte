@@ -117,7 +117,7 @@ else:
 urlpatterns += patterns('',
     url(r'^robots\.txt$', direct_to_template,
         {'template': 'robots.txt', 'mimetype': 'text/plain'}),
-    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
+    url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to',
         {'url': settings.STATIC_URL + 'imgs/favicon.ico'}),)
 if settings.DEBUG:
     urlpatterns += patterns('django.contrib.staticfiles.views',
