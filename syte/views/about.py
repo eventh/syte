@@ -33,7 +33,7 @@ PACKAGES = [
 
     {'name': 'jQuery',
      'url': '//jquery.com/',
-     'version': '1.8.0',
+     'version': '1.9.0',
      'description': 'Copyright 2012 jQuery Foundation and other contributors.',
      'license': 'MIT'},
 
