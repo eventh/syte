@@ -27,10 +27,14 @@ def site_pages(request):
     context['TENT_ENTITY_URI'] = settings.TENT_ENTITY_URI
     context['TENT_FEED_URL'] = settings.TENT_FEED_URL
 
+    context['STEAM_INTEGRATION_ENABLED'] = settings.STEAM_INTEGRATION_ENABLED
+    context['STACKOVERFLOW_INTEGRATION_ENABLED'] = settings.STACKOVERFLOW_INTEGRATION_ENABLED
+
     context['DISQUS_INTEGRATION_ENABLED'] = settings.DISQUS_INTEGRATION_ENABLED
     context['DISQUS_SHORTNAME'] = settings.DISQUS_SHORTNAME
 
     context['GOOGLE_ANALYTICS_TRACKING_ID'] = settings.GOOGLE_ANALYTICS_TRACKING_ID
+    context['SHARETHIS_PUBLISHER_KEY'] = settings.SHARETHIS_PUBLISHER_KEY
 
     context['DOCUMENTS_PAGE_ENABLED'] = settings.DOCUMENTS_PAGE_ENABLED
     context['ABOUT_PAGE_ENABLED'] = settings.ABOUT_PAGE_ENABLED
@@ -38,5 +42,8 @@ def site_pages(request):
     context['WOOPRA_TRACKING_DOMAIN'] = settings.WOOPRA_TRACKING_DOMAIN
     context['WOOPRA_TRACKING_IDLE_TIMEOUT'] = settings.WOOPRA_TRACKING_IDLE_TIMEOUT
     context['WOOPRA_TRACKING_INCLUDE_QUERY'] = settings.WOOPRA_TRACKING_INCLUDE_QUERY
+
+    context['blog_platform'] = settings.BLOG_PLATFORM
+    context['wp_blog_url'] = settings.WORDPRESS_BLOG_URL
 
     return context

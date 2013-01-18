@@ -7,9 +7,9 @@
 {% block extra_inline_js %}
 var indexPage = true;
 var postOffset = 0;
-{% if tag_slug %}
-var tagSlug = "{{tag_slug}}";
-{% else %}
-var tagSlug;
+var tagSlug = "{{ tag_slug }}";
+var blogPlatform = "{{ blog_platform }}";
+{% if blog_platform == 'wordpress' %}
+var wpDomain = '{{ wp_blog_url }}';
 {% endif %}
 {% endblock %}

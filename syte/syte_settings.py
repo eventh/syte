@@ -12,12 +12,16 @@ else:
 
 COMPRESS_REVISION_NUMBER = '1.0'
 
+BLOG_PLATFORM = 'tumblr'  # Wordpress or tumblr
 
 #Blog Integration: Tumblr
 TUMBLR_BLOG_URL = 'eventh.tumblr.com'
 TUMBLR_API_URL = 'http://api.tumblr.com/v2/blog/{0}'.format(TUMBLR_BLOG_URL)
 TUMBLR_API_KEY = '[ENTER TUMBLR API KEY HERE, SEE TUMBLR SETUP INSTRUCTIONS]'
 
+#Blog Integration: Wordpress
+WORDPRESS_BLOG_URL = '[ENTER WORDPRESS BLOG URL] ex. gordonkoo.wordpress.com'
+WORDPRESS_API_URL = 'https://public-api.wordpress.com/rest/v1/sites/{0}'.format(WORDPRESS_BLOG_URL)
 
 #RSS Feed Integration: (by default use Tumbrl rss feed)
 RSS_FEED_ENABLED = True
@@ -43,6 +47,11 @@ GITHUB_CLIENT_ID = '[ENTER GITHUB CLIENT ID HERE, SEE GITHUB SETUP INSTRUCTIONS]
 GITHUB_CLIENT_SECRET = '[ENTER GITHUB CLIENT SECRET HERE, SEE GITHUB SETUP INSTRUCTIONS]'
 GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 GITHUB_OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
+
+
+#Stack Overflow Integration
+STACKOVERFLOW_INTEGRATION_ENABLED = True
+STACKOVERFLOW_API_URL = 'http://api.stackoverflow.com/1.1/'
 
 
 #Dribbble Integration
@@ -78,6 +87,10 @@ FOURSQUARE_OAUTH_ACCESS_TOKEN_URL = 'https://foursquare.com/oauth2/access_token'
 
 #Google Analytics
 GOOGLE_ANALYTICS_TRACKING_ID = ''
+
+
+#ShareThis
+SHARETHIS_PUBLISHER_KEY = ''
 
 
 #Woopra
@@ -117,6 +130,12 @@ BITBUCKET_SHOW_FORKS = False
 TENT_INTEGRATION_ENABLED = False
 TENT_ENTITY_URI = '[ENTER YOUR ENTITY URI HERE] ex. https://yourname.tent.is'
 TENT_FEED_URL = '[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is'
+
+
+#Steam Integration
+STEAM_INTEGRATION_ENABLED = True
+STEAM_API_URL = 'http://api.steampowered.com/ISteamUser'
+STEAM_API_KEY = '[ENTER YOUR STEAM API KEY HERE, SEE STEAM SETUP INSTRUCTIONS]'
 
 
 #Ohloh Integration

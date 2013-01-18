@@ -22,7 +22,7 @@ var spin_opts = {
   speed: 1.5,
   trail: 40,
   shadow: false,
-  hwaccel: false,
+  hwaccel: true,
   className: 'spinner',
   zIndex: 2e9
 };
@@ -32,14 +32,12 @@ require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
   function() {
     $(function() {
       if (typeof indexPage === 'undefined' || !indexPage) {
-        return
+        return;
       }
 
-      if (tagSlug) {
-        fetchBlogPosts(postOffset, tagSlug);
-      } else {
-        fetchBlogPosts(postOffset);
-      }
+      setupLinks();
+      fetchBlogPosts(postOffset, tagSlug, blogPlatform);
+
       if (disqus_integration_enabled) {
         $('body').bind('blog-post-loaded', function() {
           embedDisqus(true);
@@ -47,18 +45,23 @@ require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
       }
     });
 
-    var resultsLoaded = false;
+    var resultsLoaded = false,
+        reachedEnd    = false, // set to true if no more blog posts left.
+        scrollWait    = false,
+        scrollWaitDur = 250;
+
     $(window).scroll(function() {
-      if (!resultsLoaded && ($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
+      if(!reachedEnd && !resultsLoaded && !scrollWait &&
+          ($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
         resultsLoaded = true;
         postOffset += 20;
-        if (tagSlug) {
-          fetchBlogPosts(postOffset, tagSlug);
-        } else {
-          fetchBlogPosts(postOffset);
-        }
+        fetchBlogPosts(postOffset, tagSlug, blogPlatform);
+        scrollWait = true;
+        // Only load posts at most every scrollWaitDur milliseconds.
+        setTimeout(function() { scrollWait = false; }, scrollWaitDur);
       }
-      if (resultsLoaded && ($(window).scrollTop() + $(window).height() < $(document).height()/1.2)) {
+      if(resultsLoaded && ($(window).scrollTop() +
+          $(window).height() < $(document).height()/1.2)) {
         resultsLoaded = false;
       }
     });
@@ -70,7 +73,7 @@ require(["jquery", "js/components/links", "js/components/blog-posts"],
   function(base) {
     $(function() {
       if (typeof blogsPage === 'undefined' || !blogsPage) {
-        return
+        return;
       }
 
       setupLinks();
