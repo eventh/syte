@@ -30,11 +30,9 @@ var spin_opts = {
 // index.html --- Load blog posts
 require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
   function() {
-    if (typeof indexPage === 'undefined' || !indexPage) {
-      return;
-    }
-
     $(function() {
+      if (typeof indexPage === 'undefined' || !indexPage) { return; }
+
       setupLinks();
       fetchBlogPosts(postOffset, tagSlug, blogPlatform);
 
@@ -51,6 +49,8 @@ require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
         scrollWaitDur = 250;
 
     $(window).scroll(function() {
+      if (typeof indexPage === 'undefined' || !indexPage) { return; }
+
       if(!reachedEnd && !resultsLoaded && !scrollWait &&
           ($(window).scrollTop() + $(window).height() > $(document).height()/1.2)) {
         resultsLoaded = true;
@@ -72,9 +72,7 @@ require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
 require(["jquery", "js/components/links", "js/components/blog-posts"],
   function(base) {
     $(function() {
-      if (typeof blogsPage === 'undefined' || !blogsPage) {
-        return;
-      }
+      if (typeof blogsPage === 'undefined' || !blogsPage) { return; }
 
       setupLinks();
       adjustBlogHeaders();
