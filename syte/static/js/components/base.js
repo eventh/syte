@@ -30,11 +30,11 @@ var spin_opts = {
 // index.html --- Load blog posts
 require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
   function() {
-    $(function() {
-      if (typeof indexPage === 'undefined' || !indexPage) {
-        return;
-      }
+    if (typeof indexPage === 'undefined' || !indexPage) {
+      return;
+    }
 
+    $(function() {
       setupLinks();
       fetchBlogPosts(postOffset, tagSlug, blogPlatform);
 
