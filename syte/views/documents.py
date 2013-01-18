@@ -9,6 +9,11 @@ from django.conf import settings
 # {file, title, subtitle, description, date, url}
 # Use url to give direct link to file, or file to host yourself.
 ALL_DOCUMENTS = [
+    {'title': 'Trace-based just-in-time compiler for Haskell with RPython',
+     'description': "My Master's thesis.",
+     'url': 'http://bitbucket.org/eventh/courses/downloads/Trace-based%20just-in-time%20compiler%20for%20Haskell%20with%20RPython.pdf',
+     'date': 'January 2013'},
+
     {'title': 'Implementing Haskell in RPython',
      'description': 'PyHaskell is an Haskell VM written in RPython, '
      'to investigate how Haskell can benefit from JIT compilation '
