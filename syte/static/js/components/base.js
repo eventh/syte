@@ -10,7 +10,11 @@ require.config({
     "text": "js/libs/text",
     "json": "js/libs/json"
   },
-  waitSeconds: 15
+  waitSeconds: 15,
+  optimizeAllPluginResources: true,
+  preserveLicenseComments: false,
+  inlineText: true,
+  inlineJSON: false,
 });
 
 var spin_opts = {

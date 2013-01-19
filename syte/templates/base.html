@@ -56,7 +56,7 @@
   </span>
   <h3><a href="/">rigoneri.com</a></h3>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script type="text/javascript">
 var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
     github_integration_enabled = {% if GITHUB_INTEGRATION_ENABLED %}true{% else %}false{% endif %},
@@ -87,7 +87,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
 <script src="{{ MEDIA_URL }}js/libs/jquery.url.js"></script>
 <script src="{{ MEDIA_URL }}js/libs/require.js"></script>
 <script src="{{ MEDIA_URL }}js/libs/handlebars.js"></script>
-<script src="{{ MEDIA_URL }}js/libs/moment.min.js"></script>
+<script src="{{ MEDIA_URL }}js/libs/moment.js"></script>
 <script src="{{ MEDIA_URL }}js/libs/bootstrap-modal.js"></script>
 <script src="{{ MEDIA_URL }}js/libs/spin.js"></script>
 <script src="{{ MEDIA_URL }}js/libs/prettify.js"></script>
@@ -110,7 +110,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
 {% if STEAM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/steam.js"></script>{% endif %}
 {% if STACKOVERFLOW_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/stackoverflow.js"></script>{% endif %}
 {% else %}
-<script src="{{ MEDIA_URL }}js/min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js"></script>
+<script data-main="{{ MEDIA_URL }}min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js" src="{{ MEDIA_URL }}min/require.min.js"></script>
 {% endif %}
 
 {% if SHARETHIS_PUBLISHER_KEY %}
