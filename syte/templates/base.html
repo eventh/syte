@@ -110,7 +110,7 @@ var twitter_integration_enabled = {% if TWITTER_INTEGRATION_ENABLED %}true{% els
 {% if STEAM_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/steam.js"></script>{% endif %}
 {% if STACKOVERFLOW_INTEGRATION_ENABLED %}<script src="{{ MEDIA_URL }}js/components/stackoverflow.js"></script>{% endif %}
 {% else %}
-<script data-main="{{ MEDIA_URL }}min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js" src="{{ MEDIA_URL }}min/require.min.js"></script>
+<script data-main="{{ MEDIA_URL }}js/min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js" src="{{ MEDIA_URL }}js/min/require.min.js"></script>
 {% endif %}
 
 {% if SHARETHIS_PUBLISHER_KEY %}
