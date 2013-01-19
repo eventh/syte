@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-DEPLOYMENT_MODE = 'dev'
+DEPLOYMENT_MODE = 'prod'
 COMPRESS_REVISION_NUMBER = '1.0'
 
 BLOG_PLATFORM = 'tumblr'  # Wordpress or tumblr
@@ -132,6 +132,6 @@ if DEPLOYMENT_MODE == 'dev':
     DEBUG = True
 else:
     DEBUG = False
-    SITE_ROOT_URI = 'http://eventh-test.herokuapp.com/'
+    SITE_ROOT_URI = 'http://syte-test.herokuapp.com/'
 
 MEDIA_URL = SITE_ROOT_URI + 'static/'
