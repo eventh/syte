@@ -50,7 +50,7 @@ GITHUB_OAUTH_ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token'
 
 
 #Stack Overflow Integration
-STACKOVERFLOW_INTEGRATION_ENABLED = True
+STACKOVERFLOW_INTEGRATION_ENABLED = False
 STACKOVERFLOW_API_URL = 'http://api.stackoverflow.com/1.1/'
 
 
@@ -133,7 +133,7 @@ TENT_FEED_URL = '[ENTER A URL TO YOUR FEED] ex. https://yourname.tent.is'
 
 
 #Steam Integration
-STEAM_INTEGRATION_ENABLED = True
+STEAM_INTEGRATION_ENABLED = False
 STEAM_API_URL = 'http://api.steampowered.com/ISteamUser'
 STEAM_API_KEY = '[ENTER YOUR STEAM API KEY HERE, SEE STEAM SETUP INSTRUCTIONS]'
 
