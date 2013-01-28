@@ -44,9 +44,9 @@ require(["jquery", "js/components/blog-posts", "js/libs/jquery.url", "json"],
     });
 
     var resultsLoaded = false,
-        reachedEnd    = false, // set to true if no more blog posts left.
         scrollWait    = false,
         scrollWaitDur = 250;
+    reachedEnd = false; // set to true if no more blog posts left.
 
     $(window).scroll(function() {
       if (typeof indexPage === 'undefined' || !indexPage) { return; }
