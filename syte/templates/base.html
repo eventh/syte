@@ -109,17 +109,16 @@ var require = {
 <script src="{{ STATIC_URL }}js/libs/require.js"></script>
 <script type="text/javascript">
     require([
-        "jquery",
         "js/libs/handlebars",
         "js/libs/moment",
         "js/libs/spin",
         "js/libs/prettify",
-        "js/libs/bootstrap-transition",
-        "js/libs/bootstrap-modal",
         "js/components/base",
-        "js/components/mobile",
         "js/components/blog-posts",
         "js/components/links",
+        "js/components/mobile",
+        "js/libs/bootstrap-transition",
+        "js/libs/bootstrap-modal",
 {% if TWITTER_INTEGRATION_ENABLED %}"js/components/twitter",{% endif %}
 {% if GITHUB_INTEGRATION_ENABLED %}"js/components/github",{% endif %}
 {% if DRIBBBLE_INTEGRATION_ENABLED %}"js/components/dribbble",{% endif %}

@@ -8,12 +8,6 @@ function renderBlogPosts(posts) {
       reachedEnd = true;
   }
   
-  //Update this every time there are changes to the required 
-  //templates since it's cached every time
-  require.config({
-    urlArgs: "bust=v1" 
-  })
-
   require(["text!templates/blog-post-text.html",
           "text!templates/blog-post-photo.html",
           "text!templates/blog-post-link.html",
