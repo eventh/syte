@@ -39,6 +39,7 @@ def compress_js():
     js_files = (
         ('js/libs/handlebars', True),
         ('js/libs/moment', True),
+        ('js/libs/bootstrap-transition', True),
         ('js/libs/bootstrap-modal', True),
         ('js/libs/spin', True),
         ('js/libs/prettify', True),

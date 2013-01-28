@@ -114,6 +114,7 @@ var require = {
         "js/libs/moment",
         "js/libs/spin",
         "js/libs/prettify",
+        "js/libs/bootstrap-transition",
         "js/libs/bootstrap-modal",
         "js/components/base",
         "js/components/mobile",
@@ -136,7 +137,6 @@ var require = {
 {% if STACKOVERFLOW_INTEGRATION_ENABLED %}"js/components/stackoverflow",{% endif %}
     ]);
 </script>
-
 {% else %}
 <script data-main="{{ STATIC_URL }}min/scripts-{{ COMPRESS_REVISION_NUMBER }}.min.js" src="{{ STATIC_URL }}min/require.min.js"></script>
 {% endif %}
