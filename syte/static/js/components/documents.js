@@ -19,7 +19,9 @@ function setupDocuments(el) {
       var template = Handlebars.compile(view);
       $(template(data)).modal().on('hidden', function () {
         $(this).remove();
-        adjustSelection('home');
+        if (currSelection === 'documents') {
+          adjustSelection('home');
+        }
       });
 
       spinner.stop();

@@ -19,7 +19,9 @@ function setupAbout(el) {
       var template = Handlebars.compile(view);
       $(template(data)).modal().on('hidden', function () {
         $(this).remove();
-        adjustSelection('home');
+        if (currSelection === 'about') {
+          adjustSelection('home');
+        }
       });
 
       spinner.stop();

@@ -57,25 +57,25 @@ function setupLinks() {
         adjustSelection('bitbucket', setupBitbucket.bind(this, url, this));
       }
       else if (ohloh_integration_enabled && (url.attr('host') == 'ohloh.net' || url.attr('host') == 'www.ohloh.net')) {
-        adjustSelection('ohloh', setupOhloh.bind(this, url, this);
+        adjustSelection('ohloh', setupOhloh.bind(this, url, this));
       }
       else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
         adjustSelection('foursquare', setupFoursquare.bind(this, this));
       }
       else if (this.id === 'documents-link' && documents_page_enabled) {
-        adjustSelection('documents', setupDocuments.bind(this, this);
+        adjustSelection('documents', setupDocuments.bind(this, this));
       }
       else if (this.id == 'about-link' && about_page_enabled) {
-         adjustSelection('about', setupAbout.bind(this, this);
+         adjustSelection('about', setupAbout.bind(this, this));
       }
       else if(this.id == 'tent-link' && tent_integration_enabled) {
         adjustSelection('tent', setupTent.bind(this, this));
       }
       else if (this.id == 'steam-link' && steam_integration_enabled) {
-        adjustSelection('steam', setupSteam.bind(this, url, this);
+        adjustSelection('steam', setupSteam.bind(this, url, this));
       }
       else if (this.id == 'stackoverflow-link' && stackoverflow_integration_enabled) {
-         adjustSelection('stackoverflow', setupStackoverflow.bind(this, url, this);
+         adjustSelection('stackoverflow', setupStackoverflow.bind(this, url, this));
       }
       else {
         window.location = this.href;
