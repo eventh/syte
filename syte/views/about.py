@@ -50,6 +50,12 @@ PACKAGES = [
      'description': 'Copyright (c) 2011 Felix Gnass [fgnass at neteye dot de]',
      'license': 'MIT'},
 
+    {'name': 'bootstrap-transition.js',
+     'url': '//twitter.github.com/bootstrap/javascript.html#transitions',
+     'version': '2.2.2',
+     'description': 'Copyright 2012 Twitter, Inc',
+     'license': 'Apache Version 2.0'},
+
     {'name': 'bootstrap-modal.js',
      'url': '//twitter.github.com/bootstrap/javascript.html#modals',
      'version': '2.2.1',

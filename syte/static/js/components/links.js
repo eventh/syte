@@ -59,8 +59,7 @@ function setupLinks() {
         adjustSelection('foursquare', setupFoursquare.bind(this, this));
       }
       else if (this.id == 'about-link' && about_page_enabled) {
-         adjustSelection('about');
-         setupAbout(this);
+         adjustSelection('about', setupAbout.bind(this, this));
       }
       else if(this.id == 'tent-link' && tent_integration_enabled) {
         adjustSelection('tent', setupTent.bind(this, this));
