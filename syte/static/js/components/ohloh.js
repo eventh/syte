@@ -33,7 +33,9 @@ function setupOhloh(url, el) {
 
             $(template(ohloh_data)).modal().on('hidden', function () {
                 $(this).remove();
-                adjustSelection('home');
+                if (currSelection === 'ohloh') {
+                  adjustSelection('home');
+                }
             });
 
             spinner.stop();

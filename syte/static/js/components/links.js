@@ -56,8 +56,7 @@ function setupLinks() {
         adjustSelection('bitbucket', setupBitbucket.bind(this, url, this));
       }
       else if (ohloh_integration_enabled && (url.attr('host') == 'ohloh.net' || url.attr('host') == 'www.ohloh.net')) {
-        adjustSelection('ohloh');
-        setupOhloh(url, this);
+        adjustSelection('ohloh', setupOhloh.bind(this, url, this));
       }
       else if(this.id == 'foursquare-link' && foursquare_integration_enabled) {
         adjustSelection('foursquare', setupFoursquare.bind(this, this));
