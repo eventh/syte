@@ -40,6 +40,7 @@ def compress_js():
         ('libs/handlebars', True),
         ('libs/jquery.url', True),
         ('libs/moment', True),
+        ('libs/bootstrap-transition', True),
         ('libs/bootstrap-modal', True),
         ('libs/spin', True),
         ('libs/prettify', True),
@@ -60,7 +61,6 @@ def compress_js():
         ('components/steam', settings.STEAM_INTEGRATION_ENABLED),
         ('components/stackoverflow', settings.STACKOVERFLOW_INTEGRATION_ENABLED),
     )
-    # jquery.url???
 
     includes = ','.join('js/' + path for path, include in js_files if include)
 
