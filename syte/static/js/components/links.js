@@ -75,7 +75,7 @@ function setupLinks() {
         adjustSelection('steam', setupSteam.bind(this, url, this));
       }
       else if (this.id == 'stackoverflow-link' && stackoverflow_integration_enabled) {
-         adjustSelection('stackoverflow', setupStackoverflow.bind(this, url, this));
+        adjustSelection('stackoverflow', setupStackoverflow.bind(this, url, this));
       }
       else {
         window.location = this.href;
