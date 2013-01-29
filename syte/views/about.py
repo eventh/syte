@@ -76,7 +76,7 @@ PACKAGES = [
 
     {'name': 'bootstrap-modal.js',
      'url': '//twitter.github.com/bootstrap/javascript.html#modals',
-     'version': '2.0.3',
+     'version': '2.2.1',
      'description': 'Copyright 2012 Twitter, Inc.',
      'license': 'Apache Version 2.0'},
 
