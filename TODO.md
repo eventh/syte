@@ -29,4 +29,5 @@ List of services to add integration for:
     - Quora
     - trakt
     - Google+
+    - Posterous Spaces
 
